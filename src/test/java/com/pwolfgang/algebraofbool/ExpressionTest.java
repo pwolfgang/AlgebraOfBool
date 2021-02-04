@@ -43,6 +43,7 @@ public class ExpressionTest {
     @Test
     public void modusPones() throws Exception {
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        System.out.println("Modus pones");
         Expression X1 = p;
         Expression X2 = p.impl(q);
         Expression Y = q;
@@ -51,8 +52,28 @@ public class ExpressionTest {
         Expression X1andX2 = X1.and(X2);
         System.out.println("P \u2227 (P → Q): " + X1andX2);
         Expression X1andX2implY = X1andX2.impl(Y);
-        System.out.println("(P \u2227 (P → Q)) → Q: " + X1andX2implY);;
+        System.out.println("(P \u2227 (P → Q)) → Q: " + X1andX2implY);
+        System.out.println("QED");
+        System.out.println();
         assertEquals(ONE, X1andX2implY);
+    }
+
+    @Test
+    public void modusTollens() throws Exception {
+        System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        System.out.println("Modus Tollens");
+        Expression X1 = q.not();
+        Expression X2 = p.impl(q);
+        Expression Y = p.not();
+        System.out.println("\u2310Q: " + X1);
+        System.out.println("P → Q: " + X2);
+        Expression X1andX2 = X1.and(X2);
+        System.out.println("\u2310Q \u2227 (P → Q): " + X1andX2);
+        Expression X1andX2implY = X1andX2.impl(Y);
+        System.out.println("(\u2310Q \u2227 (P → Q)) → \u2310P: " + X1andX2implY);;
+        assertEquals(ONE, X1andX2implY);
+        System.out.println("QED");
+        System.out.println();
     }
     
     @Test
