@@ -36,12 +36,18 @@ public class Term implements Expression {
         factors.add(e1);
         factors.add(e2);
     }
-
+    
     @Override
     public Expression plus(Expression e) {
         if (factors.contains(e)) {
             factors.remove(e);
-            return this;
+            if (factors.isEmpty()) {
+                return ZERO;
+            } else if (factors.size() == 1) {
+                return factors.get(0);
+            } else {
+                return this;
+            }
         }
         if (e == ONE) {
             factors.add(0, ONE);
@@ -51,8 +57,21 @@ public class Term implements Expression {
             return this;
         }
         if (e instanceof Term) {
-            factors.addAll(((Term) e).factors);
-            return this;
+            List<Expression> facts = ((Term)e).factors;
+            facts.forEach(f -> {
+                if (factors.contains(f)) {
+                    factors.remove(f);
+                } else {
+                    factors.add(f);
+                }
+            });
+            if (factors.isEmpty()) {
+                return ZERO;
+            } else if (factors.size()==1) {
+                return factors.get(0);
+            } else {
+                return this;
+            }
         }
         factors.add(e);
         return this;
@@ -60,7 +79,44 @@ public class Term implements Expression {
 
     @Override
     public Expression times(Expression e) {
-        return null;
+        if (e instanceof Constant) {
+            return e.times(this);
+        }
+        if (e instanceof Variable || e instanceof Factor) {
+            List<Expression> newFactors = new ArrayList<>();
+            factors.forEach(f -> {
+                newFactors.add(e.times(f));
+            });
+            return createTermFromList(newFactors);
+        }
+        if (e instanceof Term) {
+            Term otherTerm = (Term)e;
+            List<Expression> otherFactors = otherTerm.factors;
+            List<Expression> newFactors = new ArrayList<>();
+            factors.forEach(f -> {
+                otherFactors.forEach(of -> {
+                    newFactors.add(f.times(of));
+                });
+            });
+            return createTermFromList(newFactors);
+        }
+        throw new RuntimeException("Type of e not recognized " + e.getClass());
+    }
+    
+    private Expression createTermFromList(List<Expression> newFactors) {
+        if (newFactors.isEmpty()) {
+            return ZERO;
+        } else if (newFactors.size() == 1) {
+            return newFactors.get(0);
+        } else if (newFactors.size() == 2) {
+            return newFactors.get(0).plus(newFactors.get(1));
+        } else {
+            Expression newTerm = newFactors.get(0).plus(newFactors.get(1));
+            for (int i = 2; i < newFactors.size(); i++) {
+                newTerm = newTerm.plus(newFactors.get(i));
+            }
+            return newTerm;
+        }
     }
     
     @Override
