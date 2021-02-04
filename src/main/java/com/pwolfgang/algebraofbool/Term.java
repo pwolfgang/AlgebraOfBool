@@ -19,6 +19,7 @@ package com.pwolfgang.algebraofbool;
 import static com.pwolfgang.algebraofbool.Constant.ONE;
 import static com.pwolfgang.algebraofbool.Constant.ZERO;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
@@ -29,10 +30,10 @@ import java.util.StringJoiner;
  */
 public class Term implements Expression {
 
-    List<Expression> factors;
+    LinkedHashSet<Expression> factors;
 
     public Term(Expression e1, Expression e2) {
-        factors = new ArrayList<>();
+        factors = new LinkedHashSet<>();
         factors.add(e1);
         factors.add(e2);
     }
@@ -44,20 +45,24 @@ public class Term implements Expression {
             if (factors.isEmpty()) {
                 return ZERO;
             } else if (factors.size() == 1) {
-                return factors.get(0);
+                var itr = factors.iterator();
+                return itr.next();
             } else {
                 return this;
             }
         }
         if (e == ONE) {
-            factors.add(0, ONE);
+            LinkedHashSet<Expression> newFactors = new LinkedHashSet<>();
+            newFactors.add(ONE);
+            newFactors.addAll(factors);
+            factors = newFactors;
             return this;
         }
         if (e == ZERO) {
             return this;
         }
         if (e instanceof Term) {
-            List<Expression> facts = ((Term)e).factors;
+            LinkedHashSet<Expression> facts = ((Term)e).factors;
             facts.forEach(f -> {
                 if (factors.contains(f)) {
                     factors.remove(f);
@@ -68,7 +73,8 @@ public class Term implements Expression {
             if (factors.isEmpty()) {
                 return ZERO;
             } else if (factors.size()==1) {
-                return factors.get(0);
+                var itr = factors.iterator();
+                return itr.next();
             } else {
                 return this;
             }
@@ -91,7 +97,7 @@ public class Term implements Expression {
         }
         if (e instanceof Term) {
             Term otherTerm = (Term)e;
-            List<Expression> otherFactors = otherTerm.factors;
+            LinkedHashSet<Expression> otherFactors = otherTerm.factors;
             List<Expression> newFactors = new ArrayList<>();
             factors.forEach(f -> {
                 otherFactors.forEach(of -> {
@@ -107,13 +113,15 @@ public class Term implements Expression {
         if (newFactors.isEmpty()) {
             return ZERO;
         } else if (newFactors.size() == 1) {
-            return newFactors.get(0);
-        } else if (newFactors.size() == 2) {
-            return newFactors.get(0).plus(newFactors.get(1));
+            var itr = newFactors.iterator();
+            return itr.next();
         } else {
-            Expression newTerm = newFactors.get(0).plus(newFactors.get(1));
-            for (int i = 2; i < newFactors.size(); i++) {
-                newTerm = newTerm.plus(newFactors.get(i));
+            var itr = newFactors.iterator();
+            var e1 = itr.next();
+            var e2 = itr.next();
+            var newTerm = e1.plus(e2);
+            while (itr.hasNext()) {
+                newTerm = newTerm.plus(itr.next());
             }
             return newTerm;
         }

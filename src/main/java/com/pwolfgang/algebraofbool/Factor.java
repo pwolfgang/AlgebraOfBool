@@ -18,7 +18,7 @@ package com.pwolfgang.algebraofbool;
 
 import static com.pwolfgang.algebraofbool.Constant.ZERO;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashSet;
 import java.util.Objects;
 
 /**
@@ -27,10 +27,10 @@ import java.util.Objects;
  */
 public class Factor implements Expression {
 
-    List<Expression> primatives;
+    LinkedHashSet<Expression> primatives;
 
     public Factor(Expression e1, Expression e2) {
-        primatives = new ArrayList<>();
+        primatives = new LinkedHashSet<>();
         primatives.add(e1);
         primatives.add(e2);
 

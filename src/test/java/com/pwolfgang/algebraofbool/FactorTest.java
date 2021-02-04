@@ -18,6 +18,7 @@ package com.pwolfgang.algebraofbool;
 
 import static com.pwolfgang.algebraofbool.Constant.ZERO;
 import java.util.List;
+import java.util.Set;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
@@ -60,21 +61,21 @@ public class FactorTest {
     public void abTimesC() {
         Expression f = ab.times(c);
         assertTrue(f instanceof Factor);
-        assertEquals(((Factor)f).primatives, List.of(a, b, c));
+        assertEquals(((Factor)f).primatives, Set.of(a, b, c));
     }
     
     @Test
     public void abTimesCD() {
         Expression f = ab.times(cd);
         assertTrue(f instanceof Factor);
-        assertEquals(((Factor)f).primatives, List.of(a, b, c, d));
+        assertEquals(((Factor)f).primatives, Set.of(a, b, c, d));
     }
     
     @Test
     public void abTimesBC() {
         Expression f = ab.times(bc);
         assertTrue(f instanceof Factor);
-        assertEquals(((Factor)f).primatives, List.of(a, b, c));
+        assertEquals(((Factor)f).primatives, Set.of(a, b, c));
     }
 
     @Test

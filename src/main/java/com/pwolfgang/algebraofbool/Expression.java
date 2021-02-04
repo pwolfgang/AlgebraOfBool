@@ -17,6 +17,8 @@
 
 package com.pwolfgang.algebraofbool;
 
+import static com.pwolfgang.algebraofbool.Constant.ONE;
+
 /**
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
@@ -24,4 +26,16 @@ package com.pwolfgang.algebraofbool;
 public interface Expression {
     Expression times(Expression e);
     Expression plus(Expression e);
+    default Expression and(Expression e) {
+        return this.times(e);
+    }
+    default Expression or(Expression e) {
+        return this.plus(e).plus(this.times(e));
+    }
+    default Expression not() {
+        return ONE.plus(this);
+    }
+    default Expression impl(Expression e) {
+        return (this.not()).or(e);
+    }
 }

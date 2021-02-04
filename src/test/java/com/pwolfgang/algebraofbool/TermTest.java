@@ -18,7 +18,8 @@ package com.pwolfgang.algebraofbool;
 
 import static com.pwolfgang.algebraofbool.Constant.ONE;
 import static com.pwolfgang.algebraofbool.Constant.ZERO;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -83,21 +84,26 @@ public class TermTest {
     @Test
     public void testTimes() {
         Expression aPLUSbTIMEScPLUSd = aPLUSb.times(cPLUSd);
-        List<Expression> factors = ((Term)aPLUSbTIMEScPLUSd).factors;
-        assertEquals(List.of(ac, ad, bc, bd), factors);    
+        LinkedHashSet<Expression> factors = ((Term)aPLUSbTIMEScPLUSd).factors;
+        assertEquals(Set.of(ac, ad, bc, bd), factors);    
     }
     
     @Test
     public void aPLUSbTIMESbPLUSc() {
         Expression aPLUSbTIMESbPLUSc = aPLUSb.times(bPLUSc);
-        List<Expression> factors = ((Term)aPLUSbTIMESbPLUSc).factors;
-        assertEquals(List.of(ab, ac, b, bc), factors);
+        LinkedHashSet<Expression> factors = ((Term)aPLUSbTIMESbPLUSc).factors;
+        assertEquals(Set.of(ab, ac, b, bc), factors);
     }
     
     @Test
     public void aPLUSbPLUSabTIMESonePLUSb() {
         Expression aPLUSbPLUSabTIMESonePLUSb = aPLUSb.plus(ab).times(ONE.plus(b));
         assertEquals(ab.plus(a), aPLUSbPLUSabTIMESonePLUSb);
+    }
+    
+    @Test
+    public void onePLUSpTimesQ() {
+        assertEquals(b.plus(a.times(b)),ONE.plus(a).times(b));
     }
 
     @Test
