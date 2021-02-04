@@ -17,9 +17,10 @@
 package com.pwolfgang.algebraofbool;
 
 import static com.pwolfgang.algebraofbool.Constant.ZERO;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -27,13 +28,17 @@ import java.util.Objects;
  */
 public class Factor implements Expression {
 
-    LinkedHashSet<Expression> primatives;
+    Set<Expression> primatives;
 
     public Factor(Expression e1, Expression e2) {
-        primatives = new LinkedHashSet<>();
-        primatives.add(e1);
-        primatives.add(e2);
-
+        var p = new LinkedHashSet<Expression>();
+        p.add(e1);
+        p.add(e2);
+        primatives = Collections.unmodifiableSet(p);
+    }
+    
+    Factor(LinkedHashSet<Expression> newPrimatives) {
+        primatives = Collections.unmodifiableSet(newPrimatives);
     }
 
     @Override
@@ -56,25 +61,29 @@ public class Factor implements Expression {
 
     @Override
     public Expression times(Expression e) {
+        var newPrimatives = new LinkedHashSet<Expression>(primatives);
         if (e instanceof Constant) {
-            return e.times(this);
+            var result = e.times(this);
+            return result;
         }
         if (e instanceof Variable) {
             if (primatives.contains(e)) {
                 return this;
             } else {
-                primatives.add(e);
-                return this;
+                newPrimatives.add(e);
+                Expression result = new Factor(newPrimatives);
+                return result;
             }
         }
         if (e instanceof Factor) {
             Factor f = (Factor)e;
             for (Expression p : f.primatives) {
-                if (!primatives.contains(p)) {
-                    primatives.add(p);
+                if (!newPrimatives.contains(p)) {
+                    newPrimatives.add(p);
                 }
             }
-            return this;
+            Expression result = new Factor(newPrimatives);
+            return result;
         }
         return e.times(this);
     }

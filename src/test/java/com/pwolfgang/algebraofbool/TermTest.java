@@ -84,14 +84,14 @@ public class TermTest {
     @Test
     public void testTimes() {
         Expression aPLUSbTIMEScPLUSd = aPLUSb.times(cPLUSd);
-        LinkedHashSet<Expression> factors = ((Term)aPLUSbTIMEScPLUSd).factors;
+        Set<Expression> factors = ((Term)aPLUSbTIMEScPLUSd).factors;
         assertEquals(Set.of(ac, ad, bc, bd), factors);    
     }
     
     @Test
     public void aPLUSbTIMESbPLUSc() {
         Expression aPLUSbTIMESbPLUSc = aPLUSb.times(bPLUSc);
-        LinkedHashSet<Expression> factors = ((Term)aPLUSbTIMESbPLUSc).factors;
+        Set<Expression> factors = ((Term)aPLUSbTIMESbPLUSc).factors;
         assertEquals(Set.of(ab, ac, b, bc), factors);
     }
     

@@ -40,28 +40,29 @@ public class ExpressionTest {
         q = Variable.of("Q");
     }
     
-//    @Test
-//    public void modusPones() throws Exception {
-//        System.setOut(new PrintStream(System.out, true, "UTF-8"));
-//        Expression X1 = p;
-//        Expression X2 = p.impl(q);
-//        Expression Y = q;
-//        System.out.println("P: " + X1);
-//        System.out.println("P → Q: " + X2);
-//        Expression X1andX2 = X1.and(X2);
-//        System.out.println("P \u2227 (P → Q): " + X1andX2);
-//        Expression X1andX2implY = X1andX2.impl(Y);
-//        System.out.println("(P \u2227 (P → Q)) → Q: " + X1andX2implY);;
-//        assertEquals(ONE, X1andX2implY);
-//    }
-//    
-//    @Test
-//    public void testOR() {
-//        assertEquals(p.plus(q).plus(p.times(q)), p.or(q));
-//    }
+    @Test
+    public void modusPones() throws Exception {
+        System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        Expression X1 = p;
+        Expression X2 = p.impl(q);
+        Expression Y = q;
+        System.out.println("P: " + X1);
+        System.out.println("P → Q: " + X2);
+        Expression X1andX2 = X1.and(X2);
+        System.out.println("P \u2227 (P → Q): " + X1andX2);
+        Expression X1andX2implY = X1andX2.impl(Y);
+        System.out.println("(P \u2227 (P → Q)) → Q: " + X1andX2implY);;
+        assertEquals(ONE, X1andX2implY);
+    }
     
     @Test
-    public void testImplies() {
+    public void testOR() {
+        assertEquals(p.plus(q).plus(p.times(q)), p.or(q));
+    }
+    
+    @Test
+    public void testImplies()throws Exception {
+        System.setOut(new PrintStream(System.out, true, "UTF-8"));
         Expression pIMPLq = p.impl(q);
         assertEquals(ONE.plus(p).plus(q).plus(ONE.plus(p).times(q)), p.impl(q));
     }

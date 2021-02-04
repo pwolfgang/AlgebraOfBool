@@ -44,7 +44,11 @@ enum Constant implements Primative  {
                 if (e == ONE) {
                     return ZERO;
                 } else {
+                    if (e instanceof Term) {
                     return e.plus(this);
+                    } else {
+                        return new Term(ONE, e);
+                    }
                 }
             default:
                 throw new IllegalArgumentException(this + " is not a valid constant");
