@@ -105,6 +105,17 @@ public class TermTest {
     public void onePLUSpTimesQ() {
         assertEquals(b.plus(a.times(b)),ONE.plus(a).times(b));
     }
+    
+    @Test
+    public void modusTollens() {
+        Variable p = Variable.of("P");
+        Variable q = Variable.of("Q");
+        Expression onePLUSpPLUSqPlusPQ =
+                ONE.plus(p).plus(q).plus(p.times(q));
+        Expression onePLUSp = ONE.plus(p);
+        Expression result = onePLUSpPLUSqPlusPQ.impl(onePLUSp);
+        assertEquals(ONE, result);
+    }
 
     @Test
     public void testEquals() {

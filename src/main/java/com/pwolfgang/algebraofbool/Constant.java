@@ -45,7 +45,7 @@ enum Constant implements Primative  {
                     return ZERO;
                 } else {
                     if (e instanceof Term) {
-                    return e.plus(this);
+                        return e.plus(this);
                     } else {
                         return new Term(ONE, e);
                     }

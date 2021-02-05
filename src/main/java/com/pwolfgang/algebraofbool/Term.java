@@ -66,7 +66,7 @@ public class Term implements Expression {
             newFactors.add(ONE);
             newFactors.addAll(factors);
             Expression result = new Term(newFactors);
-            return this;
+            return result;
         }
         if (e == ZERO) {
             System.out.println(this);
@@ -85,7 +85,7 @@ public class Term implements Expression {
             if (newFactors.isEmpty()) {
                 return ZERO;
             } else if (newFactors.size()==1) {
-                var itr = factors.iterator();
+                var itr = newFactors.iterator();
                 var result = itr.next();
                 return result;
             } else {

@@ -30,6 +30,7 @@ public class ExpressionTest {
     
     Variable p;
     Variable q;
+    Variable r;
     
     public ExpressionTest() {
     }
@@ -38,6 +39,7 @@ public class ExpressionTest {
     public void setUp() {
         p = Variable.of("P");
         q = Variable.of("Q");
+        r = Variable.of("R");
     }
     
     @Test
@@ -65,15 +67,66 @@ public class ExpressionTest {
         Expression X1 = q.not();
         Expression X2 = p.impl(q);
         Expression Y = p.not();
-        System.out.println("\u2310Q: " + X1);
+        System.out.println("\u00acQ: " + X1);
         System.out.println("P → Q: " + X2);
         Expression X1andX2 = X1.and(X2);
-        System.out.println("\u2310Q \u2227 (P → Q): " + X1andX2);
+        System.out.println("\u00acQ \u2227 (P → Q): " + X1andX2);
         Expression X1andX2implY = X1andX2.impl(Y);
-        System.out.println("(\u2310Q \u2227 (P → Q)) → \u2310P: " + X1andX2implY);;
+        System.out.println("(\u00acQ \u2227 (P → Q)) → \u00acP: " + X1andX2implY);;
         assertEquals(ONE, X1andX2implY);
         System.out.println("QED");
         System.out.println();
+    }
+    
+    @Test
+    public void hypotheticalSyllogism() throws Exception {
+        System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        System.out.println("Hypothetical Syllogism");
+        Expression X1 = p.impl(q);
+        Expression X2 = q.impl(r);
+        Expression Y = p.impl(r);
+        assertEquals(ONE, X1.and(X2).impl(Y));
+    }
+    
+    @Test
+    public void disjunctiveSyllogism() {
+        Expression X1 = p.or(q);
+        Expression X2 = p.not();
+        Expression Y = q;
+        Expression result = X1.and(X2).impl(Y);
+        assertEquals(ONE, result);
+    }
+    
+    @Test
+    public void resolution() {
+        Expression X1 = p.or(q);
+        Expression X2 = p.not().or(r);
+        Expression Y = q.or(r);
+        Expression result = X1.and(X2).impl(Y);
+        assertEquals(ONE, result);
+    }
+    
+    @Test
+    public void lewisCaroll() {
+        Variable i = Variable.of("I");
+        Variable m = Variable.of("M");
+        Variable a = Variable.of("A");
+        Variable y = Variable.of("Y");
+        Variable s = Variable.of("S");
+        Expression X1 = i.impl(p);
+        Expression X2 = m.impl(a);
+        Expression X3 = y.impl(s);
+        Expression X4 = a.impl(p.not());
+        Expression X5 = m.not().impl(s.not());
+        Expression Y = y.impl(i.not());
+        Expression result = X1.and(X2).and(X3).and(X4).and(X5).impl(Y);
+        assertEquals(ONE, result);
+    }
+    
+    @Test
+    public void indepotent() {
+        assertEquals(p, p.or(p));
+        assertEquals(p, p.and(p));
     }
     
     @Test
