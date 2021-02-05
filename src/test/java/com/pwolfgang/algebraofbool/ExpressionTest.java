@@ -124,6 +124,21 @@ public class ExpressionTest {
     }
     
     @Test
+    public void example() {
+        Variable a = Variable.of("A");
+        Variable b = Variable.of("B");
+        Variable c = Variable.of("C");
+        Expression X1 = a.or(b).impl(c.equiv(a));
+        Expression X2 = a.equiv(b).impl((a.not().or(b)).and(c));
+        Expression X3 = (a.and(b).or(c.not())).and(b.impl(c));
+        System.out.println("X1: " + X1);
+        System.out.println("X2: " + X2);
+        System.out.println("X3: " + X3);
+        Expression result = X1.and(X2).and(X3).impl(c.impl(b));
+        assertEquals(ONE, result);
+    }
+    
+    @Test
     public void indepotent() {
         assertEquals(p, p.or(p));
         assertEquals(p, p.and(p));

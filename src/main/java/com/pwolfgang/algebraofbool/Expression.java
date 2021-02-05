@@ -42,4 +42,8 @@ public interface Expression {
         var result = this.not().or(e);
         return result;
     }
+    default Expression equiv(Expression e) {
+        var result = ONE.plus(this).plus(e);
+        return result;
+    }
 }
