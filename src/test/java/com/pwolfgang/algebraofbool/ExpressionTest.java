@@ -155,5 +155,25 @@ public class ExpressionTest {
         Expression pIMPLq = p.impl(q);
         assertEquals(ONE.plus(p).plus(q).plus(ONE.plus(p).times(q)), p.impl(q));
     }
+    
+    @Test
+    public void holyGrail() throws Exception {
+        System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        System.out.println("Search for the Holy Grail");
+        Variable g = Variable.of("G");
+        Variable m = Variable.of("M");
+        Variable s = Variable.of("S");
+        Expression X = (g.and(s.impl(m))).not();
+        Expression Y = (g.not().and(s.not())).not();
+        Expression Z = (g.and(m.not())).not();
+        System.out.println("X = \u00ac(G \u2227 (S\u2192M)): " + X);
+        System.out.println("Y = \u00ac(\u00acG \u2227 \u00acS): " + Y);
+        System.out.println("Z = \u00ac(G \u2227 \u00acM): " + Z);
+        Expression XandYandZ = X.and(Y).and(Z);
+        System.out.println("X \u2227 Y \u2227 Z = " + XandYandZ);
+        System.out.println("X \u2227 Y \u2227 Z \u2192 G = " + XandYandZ.impl(g));
+        System.out.println("X \u2227 Y \u2227 Z \u2192 M = " + XandYandZ.impl(m));
+        System.out.println("X \u2227 Y \u2227 Z \u2192 S = " + XandYandZ.impl(s));
+    }
 
 }
