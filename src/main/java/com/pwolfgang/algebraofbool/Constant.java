@@ -21,7 +21,7 @@ package com.pwolfgang.algebraofbool;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-enum Constant implements Primative  {
+public enum Constant implements Primative  {
     ONE, ZERO;
     @Override
     public Expression times(Expression e) {
@@ -41,6 +41,9 @@ enum Constant implements Primative  {
             case ZERO:
                 return e;
             case ONE:
+                if (e == ZERO) {
+                    return this;
+                }
                 if (e == ONE) {
                     return ZERO;
                 } else {

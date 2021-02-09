@@ -119,7 +119,10 @@ public class ExpressionTest {
         Expression X4 = a.impl(p.not());
         Expression X5 = m.not().impl(s.not());
         Expression Y = y.impl(i.not());
-        Expression result = X1.and(X2).and(X3).and(X4).and(X5).impl(Y);
+        Expression premice = X1.and(X2).and(X3).and(X4).and(X5);
+        System.out.println(premice);
+        Expression result = premice.impl(Y);
+        System.out.println(result);
         assertEquals(ONE, result);
     }
     

@@ -39,7 +39,7 @@ public interface Expression {
         return result;
     }
     default Expression impl(Expression e) {
-        var result = this.not().or(e);
+        var result = ONE.plus(this.plus(this.and(e)));
         return result;
     }
     default Expression equiv(Expression e) {
