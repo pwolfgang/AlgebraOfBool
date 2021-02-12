@@ -1,8 +1,20 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Copyright (C) 2021 Paul Wolfgang <paul@pwolfgang.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.pwolfgang.proplogic;
 
 import static com.pwolfgang.algebraofbool.Constant.ONE;
@@ -11,13 +23,21 @@ import com.pwolfgang.algebraofbool.Expression;
 import com.pwolfgang.algebraofbool.Variable;
 
 /**
- *
+ * Visit the parse tree and convert it to an Expression.
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
 public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
     
     Expression prem;
     
+    /**
+     * A program consists of a series of premises followed by a series of
+     * conclusions. The premises are each converted to Expressions and then
+     * the product of all premises is created. Then a implication is formed
+     * between the resulting product and each conclusion.
+     * @param ctx
+     * @return 
+     */
     @Override
     public Expression visitProg(PropLogicParser.ProgContext ctx) {
         prem = visit(ctx.prem());

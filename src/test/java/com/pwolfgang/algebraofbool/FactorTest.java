@@ -33,10 +33,10 @@ public class FactorTest {
     Factor ab;
     Factor bc;
     Factor cd;
-    Variable a;
-    Variable b;
-    Variable c;
-    Variable d;
+    Primative a;
+    Primative b;
+    Primative c;
+    Primative d;
     
     public FactorTest() {
     }
@@ -59,21 +59,21 @@ public class FactorTest {
     
     @Test
     public void abTimesC() {
-        Expression f = ab.times(c);
+        var f = ab.times(c);
         assertTrue(f instanceof Factor);
         assertEquals(((Factor)f).primatives, Set.of(a, b, c));
     }
     
     @Test
     public void abTimesCD() {
-        Expression f = ab.times(cd);
+        var f = ab.times(cd);
         assertTrue(f instanceof Factor);
         assertEquals(((Factor)f).primatives, Set.of(a, b, c, d));
     }
     
     @Test
     public void abTimesBC() {
-        Expression f = ab.times(bc);
+        var f = ab.times(bc);
         assertTrue(f instanceof Factor);
         assertEquals(((Factor)f).primatives, Set.of(a, b, c));
     }

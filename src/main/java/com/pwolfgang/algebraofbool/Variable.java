@@ -23,7 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *
+ * A variable is a String. Variables are unique objects. 
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
 public class Variable implements Primative {
@@ -33,7 +33,16 @@ public class Variable implements Primative {
     private Variable(String id) {
         this.id = id;
     }
-    public static Variable of(String id) {
+    
+    /**
+     * Create a Variable from a String. Note that the variables "T" and "F"
+     * return the Constants ONE or ZERO.
+     * @param id
+     * @return 
+     */
+    public static Primative of(String id) {
+        if (id.equals("T")) return ONE;
+        if (id.equals("F")) return ZERO;
         if (POOL.containsKey(id)) {
             return POOL.get(id);
         } else {

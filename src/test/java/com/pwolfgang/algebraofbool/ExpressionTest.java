@@ -28,9 +28,9 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class ExpressionTest {
     
-    Variable p;
-    Variable q;
-    Variable r;
+    Primative p;
+    Primative q;
+    Primative r;
     
     public ExpressionTest() {
     }
@@ -107,37 +107,52 @@ public class ExpressionTest {
     }
     
     @Test
-    public void lewisCaroll() {
-        Variable i = Variable.of("I");
-        Variable m = Variable.of("M");
-        Variable a = Variable.of("A");
-        Variable y = Variable.of("Y");
-        Variable s = Variable.of("S");
-        Expression X1 = i.impl(p);
-        Expression X2 = m.impl(a);
-        Expression X3 = y.impl(s);
-        Expression X4 = a.impl(p.not());
-        Expression X5 = m.not().impl(s.not());
-        Expression Y = y.impl(i.not());
-        Expression premice = X1.and(X2).and(X3).and(X4).and(X5);
+    public void lewisCaroll() throws Exception {
+        System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        System.out.println("Puzzle by Lewis Carol");
+        var i = Variable.of("I");
+        var m = Variable.of("M");
+        var a = Variable.of("A");
+        var y = Variable.of("Y");
+        var s = Variable.of("S");
+        System.out.println("No interesting poems are unpopular.");
+        var X1 = i.impl(p);
+        System.out.println(X1);
+        System.out.println("No modern poetry is free from affectation.");
+        var X2 = m.impl(a);
+        System.out.println(X2);
+        System.out.println("All your poems are on soap-bubbles");
+        var X3 = y.impl(s);
+        System.out.println(X3);
+        System.out.println("No affected poetry is popular.");
+        var X4 = a.impl(p.not());
+        System.out.println(X4);
+        System.out.println("No ancient poem is on soap-bubbles");
+        var X5 = m.not().impl(s.not());
+        System.out.println(X5);
+        System.out.println("Conclusion: Your poems are not popular");
+        var Y = y.impl(i.not());
+        System.out.println(Y);
+        System.out.println("Combined premices");
+        var premice = X1.and(X2).and(X3).and(X4).and(X5);
         System.out.println(premice);
-        Expression result = premice.impl(Y);
+        var result = premice.impl(Y);
         System.out.println(result);
         assertEquals(ONE, result);
     }
     
     @Test
     public void example() {
-        Variable a = Variable.of("A");
-        Variable b = Variable.of("B");
-        Variable c = Variable.of("C");
-        Expression X1 = a.or(b).impl(c.equiv(a));
-        Expression X2 = a.equiv(b).impl((a.not().or(b)).and(c));
-        Expression X3 = (a.and(b).or(c.not())).and(b.impl(c));
+        var a = Variable.of("A");
+        var b = Variable.of("B");
+        var c = Variable.of("C");
+        var X1 = a.or(b).impl(c.equiv(a));
+        var X2 = a.equiv(b).impl((a.not().or(b)).and(c));
+        var X3 = (a.and(b).or(c.not())).and(b.impl(c));
         System.out.println("X1: " + X1);
         System.out.println("X2: " + X2);
         System.out.println("X3: " + X3);
-        Expression result = X1.and(X2).and(X3).impl(c.impl(b));
+        var result = X1.and(X2).and(X3).impl(c.impl(b));
         assertEquals(ONE, result);
     }
     
@@ -154,8 +169,7 @@ public class ExpressionTest {
     
     @Test
     public void testImplies()throws Exception {
-        System.setOut(new PrintStream(System.out, true, "UTF-8"));
-        Expression pIMPLq = p.impl(q);
+        var pIMPLq = p.impl(q);
         assertEquals(ONE.plus(p).plus(q).plus(ONE.plus(p).times(q)), p.impl(q));
     }
     
@@ -163,16 +177,16 @@ public class ExpressionTest {
     public void holyGrail() throws Exception {
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
         System.out.println("Search for the Holy Grail");
-        Variable g = Variable.of("G");
-        Variable m = Variable.of("M");
-        Variable s = Variable.of("S");
-        Expression X = (g.and(s.impl(m))).not();
-        Expression Y = (g.not().and(s.not())).not();
-        Expression Z = (g.and(m.not())).not();
+        var g = Variable.of("G");
+        var m = Variable.of("M");
+        var s = Variable.of("S");
+        var X = (g.and(s.impl(m))).not();
+        var Y = (g.not().and(s.not())).not();
+        var Z = (g.and(m.not())).not();
         System.out.println("X = \u00ac(G \u2227 (S\u2192M)): " + X);
         System.out.println("Y = \u00ac(\u00acG \u2227 \u00acS): " + Y);
         System.out.println("Z = \u00ac(G \u2227 \u00acM): " + Z);
-        Expression XandYandZ = X.and(Y).and(Z);
+        var XandYandZ = X.and(Y).and(Z);
         System.out.println("X \u2227 Y \u2227 Z = " + XandYandZ);
         System.out.println("X \u2227 Y \u2227 Z \u2192 G = " + XandYandZ.impl(g));
         System.out.println("X \u2227 Y \u2227 Z \u2192 M = " + XandYandZ.impl(m));

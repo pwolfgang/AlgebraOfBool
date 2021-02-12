@@ -30,10 +30,10 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class TermTest {
     
-    Variable a;
-    Variable b;
-    Variable c;
-    Variable d;
+    Primative a;
+    Primative b;
+    Primative c;
+    Primative d;
     Factor ab;
     Factor bc;
     Factor ac;
@@ -83,21 +83,21 @@ public class TermTest {
 
     @Test
     public void testTimes() {
-        Expression aPLUSbTIMEScPLUSd = aPLUSb.times(cPLUSd);
+        var aPLUSbTIMEScPLUSd = aPLUSb.times(cPLUSd);
         Set<Expression> factors = ((Term)aPLUSbTIMEScPLUSd).factors;
         assertEquals(Set.of(ac, ad, bc, bd), factors);    
     }
     
     @Test
     public void aPLUSbTIMESbPLUSc() {
-        Expression aPLUSbTIMESbPLUSc = aPLUSb.times(bPLUSc);
+        var aPLUSbTIMESbPLUSc = aPLUSb.times(bPLUSc);
         Set<Expression> factors = ((Term)aPLUSbTIMESbPLUSc).factors;
         assertEquals(Set.of(ab, ac, b, bc), factors);
     }
     
     @Test
     public void aPLUSbPLUSabTIMESonePLUSb() {
-        Expression aPLUSbPLUSabTIMESonePLUSb = aPLUSb.plus(ab).times(ONE.plus(b));
+        var aPLUSbPLUSabTIMESonePLUSb = aPLUSb.plus(ab).times(ONE.plus(b));
         assertEquals(ab.plus(a), aPLUSbPLUSabTIMESonePLUSb);
     }
     
@@ -108,25 +108,13 @@ public class TermTest {
     
     @Test
     public void modusTollens() {
-        Variable p = Variable.of("P");
-        Variable q = Variable.of("Q");
-        Expression onePLUSpPLUSqPlusPQ =
+        var p = Variable.of("P");
+        var q = Variable.of("Q");
+        var onePLUSpPLUSqPlusPQ =
                 ONE.plus(p).plus(q).plus(p.times(q));
-        Expression onePLUSp = ONE.plus(p);
-        Expression result = onePLUSpPLUSqPlusPQ.impl(onePLUSp);
+        var onePLUSp = ONE.plus(p);
+        var result = onePLUSpPLUSqPlusPQ.impl(onePLUSp);
         assertEquals(ONE, result);
-    }
-
-    @Test
-    public void testEquals() {
-    }
-
-    @Test
-    public void testHashCode() {
-    }
-
-    @Test
-    public void testToString() {
     }
     
 }

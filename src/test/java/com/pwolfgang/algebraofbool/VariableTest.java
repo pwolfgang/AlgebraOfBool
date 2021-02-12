@@ -32,65 +32,65 @@ public class VariableTest {
 
     @Test
     public void ofCreatesUniqueInstances() {
-        Variable a = Variable.of("A");
+        var a = Variable.of("A");
         assertEquals(a, Variable.of("A"));
         assertNotEquals(a, Variable.of("B"));
     }
 
     @Test
     public void aTimesAisA() {
-        Variable a = Variable.of("A");
+        var a = Variable.of("A");
         assertEquals(a.times(a), a);
     }
 
     @Test
     public void aTimesBisAB() {
-        Variable a = Variable.of("A");
-        Variable b = Variable.of("B");
+        var a = Variable.of("A");
+        var b = Variable.of("B");
         assertEquals(a.times(b), new Factor(a, b));
     }
 
     @Test
     public void aTimesONEisA() {
-        Variable a = Variable.of("A");
+        var a = Variable.of("A");
         assertEquals(a.times(ONE), a);
     }
 
     @Test
     public void aTimesZEROisZERO() {
-        Variable a = Variable.of("A");
+        var a = Variable.of("A");
         assertEquals(a.times(ZERO), ZERO);
     }
 
 
     @Test
     public void aPlusAisZERO() {
-        Variable a = Variable.of("A");
+        var a = Variable.of("A");
         assertEquals(a.plus(a), ZERO);
     }
 
     @Test
     public void aPlusBisAplusB() {
-        Variable a = Variable.of("A");
-        Variable b = Variable.of("B");
+        var a = Variable.of("A");
+        var b = Variable.of("B");
         assertEquals(a.plus(b), new Term(a, b));
     }
     
     @Test
     public void aPlusONEisONEplusA() {
-        Variable a = Variable.of("A");
+        var a = Variable.of("A");
         assertEquals(a.plus(ONE), new Term(ONE, a));
     }
     
     @Test
     public void aPlusZEROisA() {
-        Variable a = Variable.of("A");
+        var a = Variable.of("A");
         assertEquals(a.plus(ZERO), a);
     }
 
     @Test
     public void ToSring() {
-        Variable a = Variable.of("A");
+        var a = Variable.of("A");
         assertEquals(a.toString(), "A");
     }
 }
