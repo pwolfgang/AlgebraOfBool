@@ -23,24 +23,40 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
- *
+ * A factor represents the conjunction of one or more Expressions
  * @author Paul
  */
 public class Factor implements Expression {
 
+    /**
+     * The components of this Factor.
+     */
     Set<Expression> primatives;
 
+    /**
+     * Create a Factor from two expressions.
+     * @param e1 The first Expression
+     * @param e2 The Second Expression
+     */
     public Factor(Expression e1, Expression e2) {
-        var p = new LinkedHashSet<Expression>();
-        p.add(e1);
-        p.add(e2);
-        primatives = Collections.unmodifiableSet(p);
+        primatives = Set.of(e1, e2);
     }
     
-    Factor(LinkedHashSet<Expression> newPrimatives) {
+    /**
+     * Create a Factor from a Set of Primitives. This is a package private
+     * constructor.
+     * @param newPrimatives 
+     */
+    Factor(Set<Expression> newPrimatives) {
         primatives = Collections.unmodifiableSet(newPrimatives);
     }
 
+    /**
+     * Add this Expression to another Expression. Addition of two equal 
+     * Factors is ZERO.
+     * @param e
+     * @return 
+     */
     @Override
     public Expression plus(Expression e) {
         if (e instanceof Constant) {
@@ -59,6 +75,12 @@ public class Factor implements Expression {
         return e.plus(this);
     }
 
+    /**
+     * Multiply this Expression by another Expression. There can only be one
+     * instance of a Primitive in a Factor.
+     * @param e
+     * @return 
+     */
     @Override
     public Expression times(Expression e) {
         var newPrimatives = new LinkedHashSet<Expression>(primatives);
@@ -88,6 +110,12 @@ public class Factor implements Expression {
         return e.times(this);
     }
 
+    /**
+     * Determine if an other Object is equal to this. Two Factors are equal
+     * if they contain the same Primitives.
+     * @param o The other object
+     * @return True if the other Object is a Factor that contains the same Primitives.
+     */
     @Override
     public boolean equals(Object o) {
         if (o == this) return true;

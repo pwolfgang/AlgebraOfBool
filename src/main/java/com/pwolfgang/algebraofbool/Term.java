@@ -27,6 +27,7 @@ import java.util.Set;
 import java.util.StringJoiner;
 
 /**
+ * A Term is the sum of Factors.
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
@@ -34,17 +35,34 @@ public class Term implements Expression {
 
     Set<Expression> factors;
 
+    /**
+     * Construct a Term from two Expressions.
+     *
+     * @param e1 The first Expression
+     * @param e2 The Second Expression
+     */
     public Term(Expression e1, Expression e2) {
-        var f = new LinkedHashSet<Expression>();
-        f.add(e1);
-        f.add(e2);
-        factors = Collections.unmodifiableSet(f);
+        factors = Set.of(e1, e2);
     }
-    
-    Term(LinkedHashSet<Expression> newFactors) {
+
+    /**
+     * Construct a Term from a set of Expressions. This is a package private
+     * constructor.
+     *
+     * @param newFactors
+     */
+    Term(Set<Expression> newFactors) {
         factors = Collections.unmodifiableSet(newFactors);
     }
-    
+
+    /**
+     * Add this Expression to another Expression. If the other expression
+     * contains a Factor that is equal to a Factor in this Term, then that
+     * Factor is removed from the sum.
+     *
+     * @param e
+     * @return
+     */
     @Override
     public Expression plus(Expression e) {
         var newFactors = new LinkedHashSet<Expression>(factors);
@@ -69,11 +87,10 @@ public class Term implements Expression {
             return result;
         }
         if (e == ZERO) {
-            System.out.println(this);
             return this;
         }
         if (e instanceof Term) {
-            Set<Expression> facts = ((Term)e).factors;
+            Set<Expression> facts = ((Term) e).factors;
             newFactors = new LinkedHashSet<>(factors);
             for (var f : facts) {
                 if (newFactors.contains(f)) {
@@ -82,21 +99,35 @@ public class Term implements Expression {
                     newFactors.add(f);
                 }
             }
-            if (newFactors.isEmpty()) {
-                return ZERO;
-            } else if (newFactors.size()==1) {
-                var itr = newFactors.iterator();
-                var result = itr.next();
-                return result;
-            } else {
-                return new Term(newFactors);
-            }
+            return createTermFromSet(newFactors);
         }
         newFactors.add(e);
         Expression result = new Term(newFactors);
         return result;
     }
 
+    private Expression createTermFromSet(LinkedHashSet<Expression> newFactors) {
+        if (newFactors.isEmpty()) {
+            return ZERO;
+        } else if (newFactors.size() == 1) {
+            var itr = newFactors.iterator();
+            var result = itr.next();
+            return result;
+        } else {
+            return new Term(newFactors);
+        }
+    }
+
+    /**
+     * Multiply this Term by another Expression. When a Term is multiplied by a
+     * Factor, the result is the sum of the products of that Factor with each
+     * Factor in this Term. When one Term is multiplied by another Term the
+     * result is the sum of multiplying each Factor in the other Term by each
+     * Factor in this Term.
+     *
+     * @param e The other Expression
+     * @return Ths product.
+     */
     @Override
     public Expression times(Expression e) {
         if (e instanceof Constant) {
@@ -113,7 +144,7 @@ public class Term implements Expression {
             return result;
         }
         if (e instanceof Term) {
-            Term otherTerm = (Term)e;
+            Term otherTerm = (Term) e;
             Set<Expression> otherFactors = otherTerm.factors;
             List<Expression> newFactors = new ArrayList<>();
             factors.forEach(f -> {
@@ -126,7 +157,7 @@ public class Term implements Expression {
         }
         throw new RuntimeException("Type of e not recognized " + e.getClass());
     }
-    
+
     private Expression createTermFromList(List<Expression> newFactors) {
         if (newFactors.isEmpty()) {
             return ZERO;
@@ -144,13 +175,22 @@ public class Term implements Expression {
             return newTerm;
         }
     }
-    
+
+    /**
+     * Two Terms are equal if they contain the same Factors.
+     * @param o The other object
+     * @return True of other is a Term equal to this Term.
+     */
     @Override
     public boolean equals(Object o) {
-        if (o == this) return true;
-        if (o == null) return false;
+        if (o == this) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
         if (o.getClass() == this.getClass()) {
-            Term other = (Term)o;
+            Term other = (Term) o;
             return factors.equals(other.factors);
         }
         return false;
@@ -162,7 +202,7 @@ public class Term implements Expression {
         hash = 19 * hash + Objects.hashCode(this.factors);
         return hash;
     }
-    
+
     @Override
     public String toString() {
         StringJoiner sj = new StringJoiner("+", "(", ")");

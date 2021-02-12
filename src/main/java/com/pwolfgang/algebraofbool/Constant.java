@@ -18,11 +18,17 @@
 package com.pwolfgang.algebraofbool;
 
 /**
- *
+ * There are two constants ZERO and ONE.
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
 public enum Constant implements Primative  {
     ONE, ZERO;
+    /**
+     * The multiply operator. ZERO times anything is ZERO and ONE times
+     * anything is that thing.
+     * @param e The other expression.
+     * @return The result of the muliply.
+     */
     @Override
     public Expression times(Expression e) {
         switch (this) {
@@ -35,6 +41,14 @@ public enum Constant implements Primative  {
         }
     }
 
+    /**
+     * The addition operator. ZERO plus anything is that thing. ONE plus adds
+     * one. This has the effect of negating the other operand. Ne that ONE plus
+     * ONE is ZERO.  When ONE is added to a term there must be a check to see
+     * if the term currently contains a ONE, in which case the ONE's cancel.
+     * @param e The other expression.
+     * @return The result of the addition.
+     */
     @Override
     public Expression plus(Expression e) {
         switch (this) {
@@ -58,6 +72,10 @@ public enum Constant implements Primative  {
         }
     }
     
+    /**
+     * Create a String representation.
+     * @return 0 for ZERO and 1 for ONE.
+     */
     @Override
     public String toString() {
         switch (this) {
