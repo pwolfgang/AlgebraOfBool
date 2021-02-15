@@ -70,3 +70,75 @@ _x_ × _x_ = _x_
 | _x_∨_y_ | _x_ + _y_ + _x_×_y_ |
 | _x_ → _y_ | 1 + _x_ + _x_×_y_ |
 | _x_ ≡ _y_ | 1 + _x_ + _y_ |
+
+### Grammar
+
+The project includes an ANTLR4 grammar for Propositional Logic. ANTLR generates a parser and tree visitor. The class EvalVisitor translates each Propositional Logic statement into the corresponding Algebra of Bool Expression. The grammar defines a program (PROG) that consists of a sequence of statements (premises) followed by one or more conclusions. The premises are separated from the conclusions by a line (10 underscore characters). All of the premises are multiplied together. The resulting product is then combined via implication to each of the conclusions. If the result is 1 then the conclusion is validated.
+
+### Example
+
+Wildberger in this MathFoundations 279 video gives this example.
+
+A logic problem for Sir Galahad:
+
+Knight of the golden road: This road leads to the grail. Also if the stones take you there, so does the marble road.
+
+Knight of the marble road: Neither the gold or stone roads lead to the grail.
+
+Knight of the stone road: Follow the gold and you&#39;ll reach the grail, follow the marble and you&#39;ll be lost.
+
+All knights are liars. Which road to take?
+
+The above statements are expressed in Propositional Logic as follows:
+
+¬(G ∧ (S → M))
+
+¬(¬G ∧ ¬S)
+
+¬(G ∧ ¬M)
+
+Where G represents the gold road, S the stone road, and M the marble road.
+
+Output from the program is as follows:
+
+¬(G∧(S→M))
+
+(1+SMG+G+GS)
+
+¬(¬G∧¬S)
+
+(S+G+GS)
+
+¬(G∧¬M)
+
+(1+GM+G)
+
+(S+SG)
+
+\_\_\_\_\_\_\_\_\_\_
+
+G
+
+G
+
+(1+S+SG)
+
+\_\_\_\_\_\_\_\_\_\_
+
+M
+
+M
+
+(1+S+SG+MS+SGM)
+
+\_\_\_\_\_\_\_\_\_\_
+
+S
+
+S
+
+1
+
+QED
+
+The conclusion is that the stone road leads to the grail.
