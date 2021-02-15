@@ -4,7 +4,7 @@ This project was inspired by a series of You-Tube videos by N J Wildberger. Spec
 
 ## Class Hierarchy
 
-![](RackMultipart20210215-4-120dxum_html_ec354632fdfdc4c9.png)
+![Class Diagram](https://github.com/pwolfgang/algebraofbool/blob/main/ClassDiagram.svg?raw=true)
 
 Expression
 
