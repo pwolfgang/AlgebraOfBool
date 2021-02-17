@@ -16,12 +16,29 @@
  */
 package com.pwolfgang.prolog;
 
+import com.pwolfgang.prolog.Expr;
+
 /**
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public abstract class Term implements Expr {
+public class ImplExpr implements Expr {
     
-    abstract void bind(Term binding);
+    private Expr left;
+    private Expr right;
+    
+    public ImplExpr(Expr left, Expr right) {
+        this.left = left;
+        this.right = right;
+    }
+    
+    public boolean containsUnboundVariables() {
+        return left.containsUnboundVariables() || right.containsUnboundVariables();
+    }
+
+    public String toString() {
+        return left.toString() + " \u2192 " + right.toString();
+    }
+    
     
 }

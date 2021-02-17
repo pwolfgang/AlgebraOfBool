@@ -23,25 +23,39 @@ prem: stat+;
 
 conc: stat+;
 
-stat:   expr NL;
+stat:   (fact | expr) '.';
+
+fact: atom;
 
 expr: op='\u00AC' expr        #notop
     | expr op='\u2227' expr   #andop
     | expr op='\u2228' expr   #orop
     | expr op='\u2192' expr   #implop
     | expr op='\u2261' expr   #equivop
+    | name                    #const
     | functor                 #predicate
-    | NAME                    #name
     | '(' expr ')'            #parens
     ;
 
-functor: NAME '(' (VARIABLE | NAME) (',' (VARIABLE | NAME))* ')'; 
+atom:   name
+    |   functor
+    ;
 
-fragment UCLETTER: [A-Z];
-fragment LCLETTER: [a-z];
+term:   name                    #nameTerm
+    |   variable                #variableTerm
+    |   functor                 #functorTerm
+    ;
+
+functor:    name'('term (',' term)*')';
+
+name:   LOWER_CASE;
+
+variable: UPPER_CASE;
+
+fragment UC_LETTER: [A-Z];
+fragment LC_LETTER: [a-z];
 fragment DIGIT: [0-9];
 LINE: '_'+;
-NAME: LCLETTER (LCLETTER | UCLETTER | DIGIT)*;
-CONSTANT: UCLETTER (LCLETTER | UCLETTER | DIGIT)*;
-NL: '\r'?'\n';
-WS: [ \t\r\n\uFEFF]+ -> skip;
+UPPER_CASE:    UC_LETTER (UC_LETTER | LC_LETTER | DIGIT)*;
+LOWER_CASE:    LC_LETTER (UC_LETTER | LC_LETTER | DIGIT)*;
+WS: [ \t\uFEFF]+ -> skip;

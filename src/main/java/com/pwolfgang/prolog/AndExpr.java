@@ -20,8 +20,22 @@ package com.pwolfgang.prolog;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public abstract class Term implements Expr {
+public class AndExpr implements Expr {
     
-    abstract void bind(Term binding);
+    private Expr left;
+    private Expr right;
     
+    public AndExpr(Expr left, Expr right) {
+        this.left = left;
+        this.right = right;
+    }
+    
+    public boolean containsUnboundVariables() {
+        return left.containsUnboundVariables() || right.containsUnboundVariables();
+    }
+    
+    public String toString() {
+        return left.toString() + " \u2227 " + right.toString();
+    }
+   
 }

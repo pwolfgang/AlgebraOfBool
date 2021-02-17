@@ -8,7 +8,6 @@ public class Variable extends Term {
     private Term binding;
     
     public Variable(String name) {
-        super(false);
         this.name = name;
     }
     

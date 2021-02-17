@@ -20,8 +20,8 @@ package com.pwolfgang.prolog;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public abstract class Term implements Expr {
+public interface Expr {
     
-    abstract void bind(Term binding);
+    boolean  containsUnboundVariables();
     
 }

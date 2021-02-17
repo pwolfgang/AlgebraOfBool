@@ -16,12 +16,26 @@
  */
 package com.pwolfgang.prolog;
 
+import com.pwolfgang.prolog.Expr;
+
 /**
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public abstract class Term implements Expr {
+public class NotExpr implements Expr {
     
-    abstract void bind(Term binding);
+    private Expr expr;
+    
+    public NotExpr(Expr expr) {
+        this.expr = expr;
+    }
+    
+    public boolean containsUnboundVariables() {
+        return expr.containsUnboundVariables();
+    }
+    
+    public String toString() {
+        return '\u00ac' + expr.toString();
+    }
     
 }

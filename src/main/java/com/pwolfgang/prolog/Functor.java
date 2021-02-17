@@ -5,14 +5,13 @@ import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Functor extends Term {
+public class Functor extends Term implements Expr {
 
     private final String name;
     private final int arity;
     private final List<Term> args;
 
     public Functor(String name, List<? extends Term> args) {
-        super(false);
         this.name = name;
         this.arity = args.size();
         this.args = new ArrayList<>(args);
@@ -78,7 +77,7 @@ public class Functor extends Term {
     public String toString() {
         StringJoiner sj = new StringJoiner(", ", "(", ")");
         args.forEach(arg -> sj.add(arg.toString()));
-        return (isNegated() ? "\u00ac" : "") + name + sj.toString();
+        return name + sj.toString();
     }
     
     public boolean containsVariable(Variable v) {

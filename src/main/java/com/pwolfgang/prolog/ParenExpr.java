@@ -20,8 +20,20 @@ package com.pwolfgang.prolog;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public abstract class Term implements Expr {
+public class ParenExpr implements Expr {
     
-    abstract void bind(Term binding);
+    Expr expr;
+    
+    public ParenExpr(Expr expr) {
+        this.expr = expr;
+    }
+    
+    public boolean containsUnboundVariables() {
+        return expr.containsUnboundVariables();
+    }
+    
+    public String toString() {
+        return "(" + expr.toString() + ")";
+    }
     
 }

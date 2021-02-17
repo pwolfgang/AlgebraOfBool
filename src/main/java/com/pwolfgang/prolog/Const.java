@@ -2,20 +2,14 @@ package com.pwolfgang.prolog;
 
 import java.util.Objects;
 
-public class Const extends Term {
+public class Const extends Term implements Expr {
     
     private final String name;
     
     public Const(String name) {
-        super(false);
         this.name = name;
     }
     
-    public Const(String name, boolean negated) {
-        super(negated);
-        this.name = name;
-    }
-
     @Override
     public int hashCode() {
         int hash = 7;
@@ -39,15 +33,14 @@ public class Const extends Term {
     
     @Override
     public String toString() {
-        return (isNegated() ? "\u00ac" : "") + name;
+        return name;
     }
     
     @Override
     public boolean containsUnboundVariables() {return false;}
     
-    @Override
     public void bind(Term binding) {
         // do nothing
     }
-    
+       
 }
