@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package com.pwolfgang.proplogic;
+package com.pwolfgang.algebraofbool;
 
 import static com.pwolfgang.algebraofbool.Constant.ONE;
 import static com.pwolfgang.algebraofbool.Constant.ZERO;
