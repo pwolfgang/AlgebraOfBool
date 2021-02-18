@@ -16,12 +16,14 @@
  */
 package com.pwolfgang.prolog;
 
+import java.util.Iterator;
+
 /**
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public abstract class Term implements Expr {
+public interface Term {
     
-    abstract void bind(Term binding);
+    public abstract void bind(Term binding);
     
 }

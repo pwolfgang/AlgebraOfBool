@@ -1,16 +1,19 @@
 package com.pwolfgang.prolog;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class Variable extends Term {
-    
+public class Variable extends Expr implements Term {
+
     private final String name;
     private Term binding;
-    
+
     public Variable(String name) {
+        super(null, null);
         this.name = name;
     }
-    
+
     @Override
     public void bind(Term binding) {
         if (binding instanceof Variable) {
@@ -22,11 +25,11 @@ public class Variable extends Term {
             this.binding = binding;
         }
     }
-    
+
     public Term getBinding() {
         return binding;
     }
-    
+
     @Override
     public boolean containsUnboundVariables() {
         return binding == null;
@@ -34,13 +37,17 @@ public class Variable extends Term {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null) {
+            return false;
+        }
         if (Variable.class == o.getClass()) {
             Variable other = (Variable) o;
             return other.name.equals(this.name) && Objects.equals(other.binding, this.binding);
         } else if (o instanceof Const) {
-            return ((Const)o).equals(this);
+            return ((Const) o).equals(this);
         } else if (o instanceof Functor) {
             return this.binding.equals(o);
         } else {
@@ -54,9 +61,28 @@ public class Variable extends Term {
         hash = 59 * hash + Objects.hashCode(this.name);
         return hash;
     }
-    
+
     @Override
     public String toString() {
         return name + "\\" + binding;
     }
+
+    public Iterator<Term> iterator() {
+        return new Iterator<Term>() {
+            private boolean called = false;
+
+            public boolean hasNext() {
+                return !called;
+            }
+
+            public Term next() {
+                if (!called) {
+                    called = true;
+                    return Variable.this;
+                }
+                throw new NoSuchElementException();
+            }
+        };
+    }
+
 }

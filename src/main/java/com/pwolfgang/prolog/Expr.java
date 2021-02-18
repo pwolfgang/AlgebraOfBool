@@ -16,12 +16,81 @@
  */
 package com.pwolfgang.prolog;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Iterator;
+
 /**
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public interface Expr {
+public abstract class Expr {
     
-    boolean  containsUnboundVariables();
+    protected Expr left;
+    protected Expr right;
     
+    public Expr(Expr left, Expr right) {
+        this.left = left;
+        this.right = right;
+    }
+    
+    public abstract boolean  containsUnboundVariables();
+    
+    public Iterator<Term> iterator() {
+        return new InOrderIterator(this);
+    }
+    
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    protected class InOrderIterator implements Iterator<Term> {
+ 
+        Expr next;
+        Iterator<Term> nextIterator;
+        
+        Deque<Expr> stack = new ArrayDeque<>();
+        
+        InOrderIterator(Expr root) {
+            if (root != null) {
+                findLeftMostChild(root);
+            } else {
+                next = null;
+            }
+        }
+        
+        private void findLeftMostChild(Expr root) {
+            while (root.left != null) {
+                stack.push(root);
+                root = root.left;
+            }
+            next = root;
+            nextIterator = next.iterator();
+        }
+        
+        private void advance() {
+            if (next.right != null) {
+                findLeftMostChild(next.right);
+            } else {
+                if (stack.isEmpty()) {
+                    next = null;
+                } else {
+                    next = stack.pop();
+                    nextIterator = next.iterator();
+                }
+            }
+        }
+        
+        @Override
+        public boolean hasNext() {
+            return next != null && nextIterator.hasNext();
+        }
+
+        @Override
+        public Term next() {
+            var returnValue = nextIterator.next();
+            if (!nextIterator.hasNext()) {
+                advance();
+            }
+            return returnValue;
+        }     
+    }
+ 
 }

@@ -22,14 +22,13 @@ import com.pwolfgang.prolog.Expr;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public class ImplExpr implements Expr {
+public class ImplExpr extends Expr {
     
     private Expr left;
     private Expr right;
     
     public ImplExpr(Expr left, Expr right) {
-        this.left = left;
-        this.right = right;
+        super(left, right);
     }
     
     public boolean containsUnboundVariables() {

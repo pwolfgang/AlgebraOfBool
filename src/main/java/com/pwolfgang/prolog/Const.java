@@ -1,12 +1,15 @@
 package com.pwolfgang.prolog;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.Objects;
 
-public class Const extends Term implements Expr {
+public class Const extends Expr implements Term {
     
     private final String name;
     
     public Const(String name) {
+        super(null, null);
         this.name = name;
     }
     
@@ -41,6 +44,24 @@ public class Const extends Term implements Expr {
     
     public void bind(Term binding) {
         // do nothing
+    }
+    
+    public Iterator<Term> iterator() {
+        return new Iterator<Term>() {
+            private boolean called = false;
+            
+            public boolean hasNext() {
+                return !called;
+            }
+            
+            public Term next() {
+                if (!called) {
+                    called = true;
+                    return Const.this;
+                }
+                throw new NoSuchElementException();
+            }
+        };
     }
        
 }

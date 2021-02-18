@@ -20,20 +20,19 @@ package com.pwolfgang.prolog;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public class ParenExpr implements Expr {
+public class ParenExpr extends Expr {
     
-    Expr expr;
     
     public ParenExpr(Expr expr) {
-        this.expr = expr;
+        super(expr, null);
     }
     
     public boolean containsUnboundVariables() {
-        return expr.containsUnboundVariables();
+        return left.containsUnboundVariables();
     }
     
     public String toString() {
-        return "(" + expr.toString() + ")";
+        return "(" + left.toString() + ")";
     }
     
 }

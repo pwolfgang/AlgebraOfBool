@@ -22,14 +22,11 @@ import com.pwolfgang.prolog.Expr;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public class OrExpr implements Expr {
+public class OrExpr extends Expr {
     
-    private Expr left;
-    private Expr right;
     
     public OrExpr(Expr left, Expr right) {
-        this.left = left;
-        this.right = right;
+        super(left, right);
     }
     
     public boolean containsUnboundVariables() {

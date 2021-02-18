@@ -20,14 +20,10 @@ package com.pwolfgang.prolog;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public class AndExpr implements Expr {
-    
-    private Expr left;
-    private Expr right;
-    
+public class AndExpr extends Expr {
+       
     public AndExpr(Expr left, Expr right) {
-        this.left = left;
-        this.right = right;
+        super(left, right);
     }
     
     public boolean containsUnboundVariables() {

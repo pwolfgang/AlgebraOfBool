@@ -22,20 +22,19 @@ import com.pwolfgang.prolog.Expr;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public class NotExpr implements Expr {
+public class NotExpr extends Expr {
     
-    private Expr expr;
     
     public NotExpr(Expr expr) {
-        this.expr = expr;
+        super(expr, null);
     }
     
     public boolean containsUnboundVariables() {
-        return expr.containsUnboundVariables();
+        return left.containsUnboundVariables();
     }
     
     public String toString() {
-        return '\u00ac' + expr.toString();
+        return '\u00ac' + left.toString();
     }
     
 }

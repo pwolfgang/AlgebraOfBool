@@ -1,17 +1,19 @@
 package com.pwolfgang.prolog;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
 
-public class Functor extends Term implements Expr {
+public class Functor extends Expr implements Term {
 
     private final String name;
     private final int arity;
     private final List<Term> args;
 
     public Functor(String name, List<? extends Term> args) {
+        super (null, null);
         this.name = name;
         this.arity = args.size();
         this.args = new ArrayList<>(args);
@@ -49,7 +51,7 @@ public class Functor extends Term implements Expr {
     @Override
     public boolean containsUnboundVariables() {
         for (Term arg : args) {
-            if (arg.containsUnboundVariables()) {
+            if (((Expr)arg).containsUnboundVariables()) {
                 return true;
             }
         }
@@ -88,6 +90,10 @@ public class Functor extends Term implements Expr {
             }
         }
         return false;
+    }
+    
+    public Iterator<Term> iterator() {
+        return args.iterator();
     }
 
 }
