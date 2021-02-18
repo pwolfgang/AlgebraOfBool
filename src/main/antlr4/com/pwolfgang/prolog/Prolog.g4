@@ -17,7 +17,7 @@
 
 grammar Prolog;
 
-prog:   prem LINE NL conc;
+prog:   prem LINE conc;
 
 prem: stat+;
 
@@ -58,4 +58,4 @@ fragment DIGIT: [0-9];
 LINE: '_'+;
 UPPER_CASE:    UC_LETTER (UC_LETTER | LC_LETTER | DIGIT)*;
 LOWER_CASE:    LC_LETTER (UC_LETTER | LC_LETTER | DIGIT)*;
-WS: [ \t\uFEFF]+ -> skip;
+WS: [ \r\n\t\uFEFF]+ -> skip;

@@ -41,8 +41,10 @@ public class Prolog {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         PrologParser parser = new PrologParser(tokens);
         ParseTree tree = parser.prog();
-//        MyVisitor myVisitor = new MyVisitor();
-//        myVisitor.visit(tree);
+        MyVisitor myVisitor = new MyVisitor();
+        myVisitor.visit(tree);
+        myVisitor.premices.forEach(System.out::println);
+        myVisitor.conclusions.forEach(System.out::println);
 
     }
 

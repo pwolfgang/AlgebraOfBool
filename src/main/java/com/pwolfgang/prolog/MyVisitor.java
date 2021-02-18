@@ -25,8 +25,8 @@ import java.util.List;
  */
 public class MyVisitor extends  PrologBaseVisitor<Expr> {
     
-    private List<Expr> premices;
-    private List<Expr> conclusions;
+    List<Expr> premices;
+    List<Expr> conclusions;
     
     public Expr visitProg(PrologParser.ProgContext ctx) {
         premices = new ArrayList<>();
