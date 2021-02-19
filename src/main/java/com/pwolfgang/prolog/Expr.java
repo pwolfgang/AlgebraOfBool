@@ -16,9 +16,7 @@
  */
 package com.pwolfgang.prolog;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.Iterator;
+import java.util.stream.Stream;
 
 /**
  *
@@ -36,61 +34,28 @@ public abstract class Expr {
     
     public abstract boolean  containsUnboundVariables();
     
-    public Iterator<Term> iterator() {
-        return new InOrderIterator(this);
-    }
-    
-    @SuppressWarnings({"unchecked", "rawtypes"})
-    protected class InOrderIterator implements Iterator<Term> {
- 
-        Expr next;
-        Iterator<Term> nextIterator;
-        
-        Deque<Expr> stack = new ArrayDeque<>();
-        
-        InOrderIterator(Expr root) {
-            if (root != null) {
-                findLeftMostChild(root);
+    public Stream<Term> stream() {
+        if (left != null && right != null) {
+            Stream<Term> leftStream;
+            Stream<Term> rightStream;
+            if (left instanceof Term) {
+                leftStream = Stream.of((Term)left);
             } else {
-                next = null;
+                leftStream = left.stream();
             }
-        }
-        
-        private void findLeftMostChild(Expr root) {
-            while (root.left != null) {
-                stack.push(root);
-                root = root.left;
-            }
-            next = root;
-            nextIterator = next.iterator();
-        }
-        
-        private void advance() {
-            if (next.right != null) {
-                findLeftMostChild(next.right);
+            if (right instanceof Term) {
+                rightStream = Stream.of((Term)right);
             } else {
-                if (stack.isEmpty()) {
-                    next = null;
-                } else {
-                    next = stack.pop();
-                    nextIterator = next.iterator();
-                }
+                rightStream = right.stream();
+            }
+            return Stream.concat(leftStream, rightStream);
+        } else if (left != null) {
+            if (left instanceof Term) {
+                return Stream.of((Term) left);
+            } else {
+                return left.stream();
             }
         }
-        
-        @Override
-        public boolean hasNext() {
-            return next != null && nextIterator.hasNext();
-        }
-
-        @Override
-        public Term next() {
-            var returnValue = nextIterator.next();
-            if (!nextIterator.hasNext()) {
-                advance();
-            }
-            return returnValue;
-        }     
+        return Stream.empty();
     }
- 
 }

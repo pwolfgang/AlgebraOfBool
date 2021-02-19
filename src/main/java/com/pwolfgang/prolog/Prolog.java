@@ -2,9 +2,8 @@ package com.pwolfgang.prolog;
 
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
-import org.antlr.v4.runtime.ANTLRInputStream;
+import java.util.List;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -45,6 +44,10 @@ public class Prolog {
         myVisitor.visit(tree);
         myVisitor.premices.forEach(System.out::println);
         myVisitor.conclusions.forEach(System.out::println);
+        Unifier unifier = new Unifier(myVisitor.premices);
+        List<Expr> result = unifier.doUnification(myVisitor.conclusions.get(0));
+        System.out.println("After Unification");
+        result.forEach(System.out::println);
 
     }
 

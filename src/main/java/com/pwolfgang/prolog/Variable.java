@@ -1,8 +1,7 @@
 package com.pwolfgang.prolog;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Variable extends Expr implements Term {
 
@@ -67,22 +66,7 @@ public class Variable extends Expr implements Term {
         return name + "\\" + binding;
     }
 
-    public Iterator<Term> iterator() {
-        return new Iterator<Term>() {
-            private boolean called = false;
-
-            public boolean hasNext() {
-                return !called;
-            }
-
-            public Term next() {
-                if (!called) {
-                    called = true;
-                    return Variable.this;
-                }
-                throw new NoSuchElementException();
-            }
-        };
+    public Stream<Term> stream() {
+        return Stream.of(this);
     }
-
 }

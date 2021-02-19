@@ -1,10 +1,10 @@
 package com.pwolfgang.prolog;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 import java.util.StringJoiner;
+import java.util.stream.Stream;
 
 public class Functor extends Expr implements Term {
 
@@ -92,8 +92,7 @@ public class Functor extends Expr implements Term {
         return false;
     }
     
-    public Iterator<Term> iterator() {
-        return args.iterator();
+    public Stream<Term> stream() {
+        return args.stream();
     }
-
 }

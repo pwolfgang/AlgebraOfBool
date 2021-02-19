@@ -1,8 +1,7 @@
 package com.pwolfgang.prolog;
 
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class Const extends Expr implements Term {
     
@@ -46,22 +45,7 @@ public class Const extends Expr implements Term {
         // do nothing
     }
     
-    public Iterator<Term> iterator() {
-        return new Iterator<Term>() {
-            private boolean called = false;
-            
-            public boolean hasNext() {
-                return !called;
-            }
-            
-            public Term next() {
-                if (!called) {
-                    called = true;
-                    return Const.this;
-                }
-                throw new NoSuchElementException();
-            }
-        };
+    public Stream<Term> stream() {
+        return Stream.of(this);
     }
-       
 }
