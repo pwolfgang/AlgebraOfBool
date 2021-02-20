@@ -38,7 +38,7 @@ public class Unifier {
     public List<Expr> doUnification(Expr conc) {
         var result = new LinkedList<>(clauses);
         result.addFirst(conc);
-        var unificationPerformed = new UnificationPerformed();
+        var unificationPerformed = new Flag();
         unificationPerformed.set(true);
         while (unificationPerformed.isTrue()) {
             unificationPerformed.set(false);
@@ -56,7 +56,9 @@ public class Unifier {
                         if (!c1.equals(c2)) {
                             if (c1.containsUnboundVariables() || c2.containsUnboundVariables()) {
                                 System.out.println("Trying to unify " + term1 + " and " + c2);
-                                c2.stream().takeWhile((t)->unificationPerformed.isFalse()).forEach(t -> {
+                                Flag loopFlag = new Flag();
+                                loopFlag.set(false);
+                                c2.stream().takeWhile((t)->loopFlag.isFalse()).forEach(t -> {
                                     Map<Term, Term> bindings = new HashMap<>();
                                     if (unify(term1, t, bindings)) {
                                         if (!bindings.isEmpty()) {
@@ -68,6 +70,7 @@ public class Unifier {
                                             });
                                             System.out.println("After binding: " + c2);
                                             unificationPerformed.set(true);
+                                            loopFlag.set(true);
                                         }
                                     }
                                 });
@@ -80,7 +83,7 @@ public class Unifier {
         return result;
     }
     
-    private static class UnificationPerformed {
+    private static class Flag {
         private boolean value = true;
         
         public void set(boolean value) {
@@ -97,6 +100,7 @@ public class Unifier {
     }
 
     public static boolean unify(Term term1, Term term2, Map<Term, Term> bindings) {
+        System.out.printf("unify(%s,%s,%s)%n", term1.toString(),term2.toString(), bindings.toString());
         if (term1 instanceof Variable) {
             return unifyVariable((Variable) term1, term2, bindings);
         }

@@ -14,6 +14,5 @@ parent(haraldV, haakon).
 parent(sonja, haakon).
 parent(X, Y) ∧ man(X) → father(X,Y).
 parent(X, Y) ∧ woman(X) → mother(X,Y).
-parent(X, Y) ∨ parent(X, Z) ∧ ancestor(Z, Y) → ancestor(X, Y).
 __________
 father(haraldV, haakon).
