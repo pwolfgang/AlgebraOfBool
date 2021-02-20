@@ -1,9 +1,12 @@
 package com.pwolfgang.prolog;
 
+import static com.pwolfgang.algebraofbool.Constant.ONE;
+import com.pwolfgang.algebraofbool.Expression;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
+import static java.util.stream.Collectors.toList;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
@@ -48,6 +51,23 @@ public class Prolog {
         List<Expr> result = unifier.doUnification(myVisitor.conclusions.get(0));
         System.out.println("After Unification");
         result.forEach(System.out::println);
+        List<Expression> premices = result
+                .stream()
+                .skip(1)
+                .map(e -> e.toExpression())
+                .collect(toList());
+        premices.forEach(System.out::println);
+        System.out.println();
+        Expression andedPremices = ONE;
+        for (var p : premices) {
+            andedPremices = andedPremices.and(p);
+        }
+        System.out.println(andedPremices);
+        System.out.println();
+        Expression conclusion = result.get(0).toExpression();
+        System.out.println(conclusion);
+        System.out.println();
+        System.out.println(andedPremices.impl(conclusion));
 
     }
 

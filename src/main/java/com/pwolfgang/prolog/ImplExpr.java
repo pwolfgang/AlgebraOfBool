@@ -16,7 +16,7 @@
  */
 package com.pwolfgang.prolog;
 
-import com.pwolfgang.prolog.Expr;
+import com.pwolfgang.algebraofbool.Expression;
 
 /**
  *
@@ -34,6 +34,12 @@ public class ImplExpr extends Expr {
 
     public String toString() {
         return left.toString() + " \u2192 " + right.toString();
+    }
+    
+    public Expression toExpression() {
+        var leftExpression = left.toExpression();
+        var rightExpression = right.toExpression();
+        return leftExpression.impl(rightExpression);
     }
     
     

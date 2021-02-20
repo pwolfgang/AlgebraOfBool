@@ -16,6 +16,8 @@
  */
 package com.pwolfgang.prolog;
 
+import com.pwolfgang.algebraofbool.Expression;
+
 /**
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
@@ -32,6 +34,12 @@ public class AndExpr extends Expr {
     
     public String toString() {
         return left.toString() + " \u2227 " + right.toString();
+    }
+    
+    public Expression toExpression() {
+        var leftExpression = left.toExpression();
+        var rightExpression = right.toExpression();
+        return leftExpression.times(rightExpression);
     }
    
 }

@@ -1,5 +1,6 @@
 package com.pwolfgang.prolog;
 
+import com.pwolfgang.algebraofbool.Expression;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -94,5 +95,17 @@ public class Functor extends Expr implements Term {
     
     public Stream<Term> stream() {
         return args.stream();
+    }
+    
+    public String getBoundName() {
+        StringJoiner sj = new StringJoiner(",", "(", ")");
+        args.forEach(arg -> {
+            sj.add(arg.getBoundName());
+        });
+        return name + sj.toString();
+    }
+    
+    public Expression toExpression() {
+        return com.pwolfgang.algebraofbool.Variable.of(getBoundName());
     }
 }

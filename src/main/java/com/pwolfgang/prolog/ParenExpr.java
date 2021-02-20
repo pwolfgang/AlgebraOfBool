@@ -16,6 +16,8 @@
  */
 package com.pwolfgang.prolog;
 
+import com.pwolfgang.algebraofbool.Expression;
+
 /**
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
@@ -33,6 +35,10 @@ public class ParenExpr extends Expr {
     
     public String toString() {
         return "(" + left.toString() + ")";
+    }
+    
+    public Expression toExpression() {
+        return left.toExpression();
     }
     
 }

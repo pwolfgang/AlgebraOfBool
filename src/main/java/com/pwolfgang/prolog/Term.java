@@ -24,6 +24,8 @@ import java.util.Iterator;
  */
 public interface Term {
     
-    public abstract void bind(Term binding);
+    void bind(Term binding);
+    
+    String getBoundName();
     
 }

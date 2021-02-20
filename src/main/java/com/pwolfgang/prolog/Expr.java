@@ -16,6 +16,7 @@
  */
 package com.pwolfgang.prolog;
 
+import com.pwolfgang.algebraofbool.Expression;
 import java.util.stream.Stream;
 
 /**
@@ -58,4 +59,7 @@ public abstract class Expr {
         }
         return Stream.empty();
     }
+    
+    public abstract Expression toExpression();   
+    
 }

@@ -1,5 +1,6 @@
 package com.pwolfgang.prolog;
 
+import com.pwolfgang.algebraofbool.Expression;
 import java.util.Objects;
 import java.util.stream.Stream;
 
@@ -47,5 +48,13 @@ public class Const extends Expr implements Term {
     
     public Stream<Term> stream() {
         return Stream.of(this);
+    }
+    
+    public Expression toExpression() {
+        return com.pwolfgang.algebraofbool.Variable.of(name);
+    }
+    
+    public String getBoundName() {
+        return name;
     }
 }

@@ -16,7 +16,7 @@
  */
 package com.pwolfgang.prolog;
 
-import com.pwolfgang.prolog.Expr;
+import com.pwolfgang.algebraofbool.Expression;
 
 /**
  *
@@ -35,6 +35,10 @@ public class NotExpr extends Expr {
     
     public String toString() {
         return '\u00ac' + left.toString();
+    }
+    
+    public Expression toExpression() {
+        return left.toExpression().not();
     }
     
 }

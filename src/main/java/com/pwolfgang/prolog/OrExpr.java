@@ -16,7 +16,7 @@
  */
 package com.pwolfgang.prolog;
 
-import com.pwolfgang.prolog.Expr;
+import com.pwolfgang.algebraofbool.Expression;
 
 /**
  *
@@ -35,6 +35,12 @@ public class OrExpr extends Expr {
 
     public String toString() {
         return left.toString() + " \2228 " + right.toString();
+    }
+    
+    public Expression toExpression() {
+        var leftExpression = left.toExpression();
+        var rightExpression = right.toExpression();
+        return leftExpression.or(rightExpression);
     }
     
 }
