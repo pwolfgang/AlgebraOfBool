@@ -52,31 +52,32 @@ public class Prolog {
         ParseTree tree = parser.prog();
         MyVisitor myVisitor = new MyVisitor();
         myVisitor.visit(tree);
+        System.out.println("Premices as input");
         myVisitor.premices.forEach(System.out::println);
+        System.out.println("Conclusion as input");
         myVisitor.conclusions.forEach(System.out::println);
         Unifier unifier = new Unifier(myVisitor.premices);
         List<Expr> result = unifier.doUnification(myVisitor.conclusions.get(0));
-        System.out.println("After Unification");
-        result.forEach(System.out::println);
+        System.out.println("Premices after Unification");
+        result.stream().skip(1).forEach(System.out::println);
+        System.out.println("Conclusion after Unification");
+        System.out.println(result.get(0));
         List<Expression> premices = result
                 .stream()
                 .skip(1)
                 .map(e -> e.toExpression())
                 .collect(toList());
-        System.out.println("Premices");
+        System.out.println("Premices Converted to Algrbra of Bool");
         premices.forEach(System.out::println);
-        System.out.println();
         Expression andedPremices = ONE;
         for (var p : premices) {
             andedPremices = andedPremices.and(p);
         }
         System.out.println("Anded Premices");
         System.out.println(andedPremices);
-        System.out.println();
         Expression conclusion = result.get(0).toExpression();
-        System.out.println("Conclusion");
+        System.out.println("Conclusion Converted to Algrbra of Bool");
         System.out.println(conclusion);
-        System.out.println();
         System.out.println("Anderd Premices Implies Conclusion");
         System.out.println(andedPremices.impl(conclusion));
         System.out.println("Anded Premices and Not Conclusion");
