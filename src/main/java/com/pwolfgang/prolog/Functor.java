@@ -92,11 +92,7 @@ public class Functor extends Expr implements Term {
         }
         return false;
     }
-    
-    public Stream<Term> stream() {
-        return args.stream();
-    }
-    
+       
     public String getBoundName() {
         StringJoiner sj = new StringJoiner(",", "(", ")");
         args.forEach(arg -> {

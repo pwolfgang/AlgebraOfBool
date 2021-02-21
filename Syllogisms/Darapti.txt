@@ -1,0 +1,4 @@
+﻿square(X) → rectangle(X).
+square(X) → rombuse(X).
+__________
+rombuse(x) ∧ rectangle(x).

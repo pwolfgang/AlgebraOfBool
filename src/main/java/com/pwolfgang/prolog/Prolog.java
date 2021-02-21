@@ -2,7 +2,9 @@ package com.pwolfgang.prolog;
 
 import static com.pwolfgang.algebraofbool.Constant.ONE;
 import com.pwolfgang.algebraofbool.Expression;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.List;
@@ -11,6 +13,7 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
+import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.tree.ParseTree;
 
@@ -24,20 +27,24 @@ public class Prolog {
 
     public static void main(String[] args) throws Exception {
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
-        InputStream inStream;
         if (args.length > 0) {
-            String inputFileName = args[0];
-            int lastDot = inputFileName.lastIndexOf(".");
-            String outputFileName;
-            if (lastDot != -1) {
-                outputFileName = inputFileName.substring(0, lastDot) + ".class";
+            File file = new File(args[0]);
+            if (file.isDirectory()) {
+                for (String name : file.list()) {
+                    System.out.println(name);
+                    var example = new File(file, name);
+                    process(new FileInputStream(example));
+                    System.out.println("\n\n\n");
+                } 
             } else {
-                outputFileName = inputFileName + ".class";
-            }
-            inStream = new FileInputStream(inputFileName);
+                process(new FileInputStream(file));
+            }      
         } else {
-            inStream = System.in;
+            process(System.in);
         }
+    }
+
+    private static void process(InputStream inStream) throws RecognitionException, IOException {
         CharStream input = CharStreams.fromStream(inStream);
         PrologLexer lexer = new PrologLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -56,19 +63,24 @@ public class Prolog {
                 .skip(1)
                 .map(e -> e.toExpression())
                 .collect(toList());
+        System.out.println("Premices");
         premices.forEach(System.out::println);
         System.out.println();
         Expression andedPremices = ONE;
         for (var p : premices) {
             andedPremices = andedPremices.and(p);
         }
+        System.out.println("Anded Premices");
         System.out.println(andedPremices);
         System.out.println();
         Expression conclusion = result.get(0).toExpression();
+        System.out.println("Conclusion");
         System.out.println(conclusion);
         System.out.println();
+        System.out.println("Anderd Premices Implies Conclusion");
         System.out.println(andedPremices.impl(conclusion));
-
+        System.out.println("Anded Premices and Not Conclusion");
+        System.out.println(andedPremices.and(conclusion.not()));
     }
 
     public static void error(Token t, String msg) {

@@ -45,11 +45,8 @@ public class Unifier {
             System.out.println("Begin unification pass");
             result.forEach(System.out::println);
             Iterator<Expr> itr1 = result.iterator();
-            Expr c1 = null;
-            while (itr1.hasNext()) {
-                c1 = itr1.next();
-                if (c1 instanceof Term) {
-                    Term term1 = (Term)c1;
+            result.stream().forEach(c1 -> {
+                c1.stream().forEach(term1 -> {
                     Iterator<Expr> itr2 = result.iterator();
                     while (itr2.hasNext()) {
                         Expr c2 = itr2.next();
@@ -77,8 +74,8 @@ public class Unifier {
                             }
                         }
                     }
-                }
-            }
+                });
+            });
         }
         return result;
     }

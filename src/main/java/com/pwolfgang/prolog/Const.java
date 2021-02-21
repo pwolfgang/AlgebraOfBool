@@ -45,11 +45,7 @@ public class Const extends Expr implements Term {
     public void bind(Term binding) {
         // do nothing
     }
-    
-    public Stream<Term> stream() {
-        return Stream.of(this);
-    }
-    
+       
     public Expression toExpression() {
         return com.pwolfgang.algebraofbool.Variable.of(name);
     }

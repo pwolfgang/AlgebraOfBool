@@ -1,0 +1,4 @@
+﻿flower(X) → ¬animal(X).
+flower(X) → plant(X).
+__________
+plant(x) ∧ ¬animal(x).

@@ -1,0 +1,4 @@
+﻿man(X) → mortal(X).
+greek(X) → man(X).
+__________
+greek(x) ∧ mortal(x).

@@ -1,0 +1,4 @@
+﻿rabbit(X) → fur(X).
+rabbit(x) ∧ pet(x).
+__________
+pet(x) ∧ fur(x).

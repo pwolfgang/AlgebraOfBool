@@ -66,10 +66,6 @@ public class Variable extends Expr implements Term {
     public String toString() {
         return name + "\\" + binding;
     }
-
-    public Stream<Term> stream() {
-        return Stream.of(this);
-    }
     
     public String getBoundName() {
         return binding.getBoundName();

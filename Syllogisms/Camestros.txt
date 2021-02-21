@@ -1,0 +1,4 @@
+﻿horse(X) → hooves(X).
+human(X) → ¬hooves(X).
+__________
+human(x) ∧ ¬horse(x).

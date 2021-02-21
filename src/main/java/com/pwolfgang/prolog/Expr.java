@@ -57,7 +57,7 @@ public abstract class Expr {
                 return left.stream();
             }
         }
-        return Stream.empty();
+        return Stream.of((Term)this);
     }
     
     public abstract Expression toExpression();   
