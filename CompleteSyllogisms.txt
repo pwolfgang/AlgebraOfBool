@@ -1,0 +1,101 @@
+﻿Barbara
+M a P	All M are P
+S a M	All S are M
+S a P	∴ All S are P
+Celarent
+M e P	No M is P
+S a M	All S are M
+S e P	∴ No S is P
+Darii
+M a P	All M are P
+S i M	Some S are M
+S i P	∴ Some S are P
+Ferio
+M e P	No M is P
+S i M	Some S are M
+S o P	∴Some S are not P
+Barbari
+M a P	All M are P
+S a M	All S are M 
+S	There is an S
+S i P	∴Some S are P
+Celaront
+M e P	No M is P
+S a M	All S are M
+S	There is an S
+S o P	∴Some S are not P
+Casare
+P e M	No P is M
+S a M	All S are M
+S e P	∴No S is P
+Camestres
+P a M	All P are M
+S e M	No S is M
+S e P	No S is P
+Festino
+P e M	No P is M
+S i M	Some S are M
+S o P	∴Some S are not P
+Baroco
+P a M	All P are M
+S o M	Some S are not M
+S o P	∴Some S are not P
+Cesaro
+P e M	No P is M
+S a M	All S are M 
+S	There is an S
+S o P	∴Some S are not P
+Camestros
+P a M	All P are M
+S e M	No S is M
+S	There is an S
+S o P	∴Some S are not P
+Datisi
+M a P	All M are P
+M is S	Some M are S
+S i P	∴Some S are P
+Disamis
+M i P	Some M are P
+M a S	All M are S
+S i P	∴ Some S are P
+Ferison
+M e P	No M is P
+M i S	Some M are S
+S o P	∴Some S are not P
+Bocardo
+M o P	Some M are not P
+M a S	All M are S
+S o P	∴Some S are not P
+Felapton
+M e P	No M is P and there is a N
+M a S	All M are S
+S o P	∴Some S are not P
+Darapti
+M a P	All M are P
+M a S	All M are S and there is an M
+S i P	∴Some S are P
+Calemes
+P a M	All P are M
+M e S	No M is S
+S e P	∴No S is P
+Dimatis
+P i M	Some P are M
+M a S	All M are S
+S i P	∴Some S are P
+Fresison
+P e M	No P is M
+M i P	Some M are S
+S o P	∴Some S are not P
+Calemos
+P a M	All P are M
+M e S	no M is S and there is an S
+S o P	∴Some S are not P
+Fesapo
+P e M	No P is M
+M a S	All M are S and there is an S
+S o P	∴Some s are not P
+Bamalip
+P a M	All P are M and there is a P
+M a S	All M are S
+S i P	∴Some S are P
+
