@@ -59,3 +59,4 @@ LINE: '_'+;
 UPPER_CASE:    UC_LETTER (UC_LETTER | LC_LETTER | DIGIT)*;
 LOWER_CASE:    LC_LETTER (UC_LETTER | LC_LETTER | DIGIT)*;
 WS: [ \r\n\t\uFEFF]+ -> skip;
+COMMENT: '/*' .*? '*/'  -> skip;

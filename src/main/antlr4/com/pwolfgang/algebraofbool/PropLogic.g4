@@ -36,7 +36,8 @@ expr: op='\u00AC' expr        #notop
 
 fragment LETTER: [A-Z];
 fragment DIGIT: [0-9];
-LINE: '__________';
+LINE: '_'+;
 ID: LETTER DIGIT*;
 NL: '\r\n';
-WS: [ \t\r\n\uFEFF]+ -> skip;
+WS: [ \t\uFEFF]+ -> skip;
+COMMENT: '/*' .*? '*/' -> skip;

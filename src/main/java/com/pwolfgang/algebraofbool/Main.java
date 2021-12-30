@@ -16,12 +16,15 @@
  */
 package com.pwolfgang.algebraofbool;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 /**
@@ -29,15 +32,31 @@ import org.antlr.v4.runtime.tree.ParseTree;
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
 public class Main {
-    
+
     public static void main(String... args) throws Exception {
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
-        InputStream is;
+        InputStream is = null;
         if (args.length > 0) {
-            is = new FileInputStream(args[0]);
+            File file = new File(args[0]);
+            if (file.isDirectory()) {
+                for (var name : file.list()) {
+                    System.out.println(name);
+                    File f = new File(file, name);
+                    is = new FileInputStream(f);
+                    process(is);
+                    System.out.println();
+                }
+            } else {
+                is = new FileInputStream(file);
+                process(is);
+            }
         } else {
             is = System.in;
+            process(is);
         }
+    }
+
+    private static void process(InputStream is) throws IOException, RecognitionException {
         CharStream input = CharStreams.fromStream(is);
         var lexer = new PropLogicLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
@@ -45,7 +64,6 @@ public class Main {
         ParseTree tree = parser.prog();
         var visitor = new EvalVisitor();
         visitor.visit(tree);
-        
     }
-    
+
 }
