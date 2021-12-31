@@ -28,11 +28,24 @@ import org.antlr.v4.runtime.RecognitionException;
 import org.antlr.v4.runtime.tree.ParseTree;
 
 /**
- *
+ * This program reads a sequence of Boolean Algebra expressions (the premises)
+ * followed by a sequence of Boolean Algebra expressions (the conclusions).
+ * The premises and separated from the conclusions by a string of underscore
+ * characters. Each Boolean Algebra expression is translated into the Algebra
+ * of Bool and simplified. The premises are then anded together and then 
+ * the implication with each conclusion is evaluated. If the result is True (1)
+ * then QED is output.
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
 public class Main {
 
+    /**
+     * Main method to process the input. Input consists of a single file as
+     * as described above, or a directory containing one or more such files.
+     * If not argument are provided, input is from standard input.
+     * @param args args[0] contains either an input file or a directory.
+     * @throws Exception 
+     */
     public static void main(String... args) throws Exception {
         System.setOut(new PrintStream(System.out, true, "UTF-8"));
         InputStream is = null;
@@ -56,6 +69,14 @@ public class Main {
         }
     }
 
+    /**
+     * Method to process an input stream. The input is parsed using an ANGLR
+     * generated parser, and the resulting parse tree is processed by a
+     * visitor.
+     * @param is The input stream.
+     * @throws IOException
+     * @throws RecognitionException 
+     */
     private static void process(InputStream is) throws IOException, RecognitionException {
         CharStream input = CharStreams.fromStream(is);
         var lexer = new PropLogicLexer(input);

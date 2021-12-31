@@ -68,16 +68,7 @@ public class Term implements Expression {
         var newFactors = new LinkedHashSet<Expression>(factors);
         if (newFactors.contains(e)) {
             newFactors.remove(e);
-            if (newFactors.isEmpty()) {
-                return ZERO;
-            } else if (newFactors.size() == 1) {
-                var itr = newFactors.iterator();
-                var result = itr.next();
-                return result;
-            } else {
-                Expression result = new Term(newFactors);
-                return result;
-            }
+            return createTermFromSet(newFactors);
         }
         if (e == ONE) {
             newFactors = new LinkedHashSet<>();

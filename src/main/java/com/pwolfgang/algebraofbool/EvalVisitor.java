@@ -35,8 +35,8 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
      * conclusions. The premises are each converted to Expressions and then
      * the product of all premises is created. Then a implication is formed
      * between the resulting product and each conclusion.
-     * @param ctx
-     * @return 
+     * @param ctx The node in the parse tree containing the program node.
+     * @return The resulting expression.
      */
     @Override
     public Expression visitProg(PropLogicParser.ProgContext ctx) {
@@ -44,6 +44,14 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
         return visit(ctx.conc());
     }
     
+    /**
+     * Method to evaluate a conclusion. The conclusion node is visited resulting
+     * in an Algebra of Bool expression. An implication between the premises
+     * and this conclusion is formed and evaluated. If the result is ONE then
+     * QED is output.
+     * @param ctx
+     * @return 
+     */
     private Expression evalConclusion(PropLogicParser.StatContext ctx) {
         Expression conc = visit(ctx.expr());
         System.out.println("__________");
@@ -58,6 +66,11 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
         
     }
     
+    /**
+     * Method to evaluate the conclusions. Each conclusion is evaluated.
+     * @param ctx The expression tree containing the conclusions node.
+     * @return 
+     */
     @Override
     public Expression visitConc(PropLogicParser.ConcContext ctx) {
         var statList = ctx.stat();
@@ -71,6 +84,12 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
         return finalResult;
     }
 
+    /**
+     * Method to evaluate the premises. Each premise is converted to Algebra
+     * of Bool form and then anded with the the other premises.
+     * @param ctx The node containing the premises.
+     * @return The result of anding the premises.
+     */
     @Override
     public Expression visitPrem(PropLogicParser.PremContext ctx) {
         var statements = ctx.stat();
@@ -86,6 +105,12 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
         return premice;
     }
 
+    /**
+     * Method to evaluate a statement. A statement consists of a single
+     * expression.
+     * @param ctx The node containing the statement.
+     * @return The result
+     */
     @Override
     public Expression visitStat(PropLogicParser.StatContext ctx) {
         System.out.print(ctx.getText());
@@ -93,36 +118,77 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
         
     }
 
+    /**
+     * Method to visit a Or operation. The left and right operands are
+     * evaluated and then the or operator is applied.
+     * @param ctx The parse tree node.
+     * @return The result
+     */
     @Override
     public Expression visitOrop(PropLogicParser.OropContext ctx) {
         return visit(ctx.expr(0)).or(visit(ctx.expr(1)));
     }
 
+    /**
+     * Method to visit a Implication operation. The left and right operands are
+     * evaluated and then the implication operator is applied.
+     * @param ctx The parse tree node.
+     * @return The result.
+     */
     @Override
     public Expression visitImplop(PropLogicParser.ImplopContext ctx) {
         return visit(ctx.expr(0)).impl(visit(ctx.expr(1)));
     }
     
+    /**
+     * Method to visit a Equivalence operation. The left and right operands are
+     * evaluated and then the equivalence operator is applied.
+     * @param ctx The parse tree node.
+     * @return The result.
+     */
     @Override
     public Expression visitEquivop(PropLogicParser.EquivopContext ctx) {
         return visit(ctx.expr(0)).equiv(visit(ctx.expr(1)));
     }
 
+    /**
+     * Method to visit an expression surrounded by parentheses. The enclosed
+     * expression is evaluated.
+     * @param ctx The parse tree node.
+     * @return The result.
+     */
     @Override
     public Expression visitParens(PropLogicParser.ParensContext ctx) {
         return visit(ctx.expr());
     }
 
+    /**
+     * Method to visit a And operation. The left and right operands are
+     * evaluated and then the and operator is applied.
+     * @param ctx The parse tree node
+     * @return The result
+     */
     @Override
     public Expression visitAndop(PropLogicParser.AndopContext ctx) {
         return visit(ctx.expr(0)).and(visit(ctx.expr(1)));
     }
 
+    /**
+     * Method to visit a Not operation. The expression is evaluated and then
+     * the not method is applied.
+     * @param ctx The parse tree node.
+     * @return The result.
+     */
     @Override
     public Expression visitNotop(PropLogicParser.NotopContext ctx) {
         return visit(ctx.expr()).not();
     }
 
+    /**
+     * Method to visit an ID. A new variable is created.
+     * @param ctx The parse tree node.
+     * @return The result.
+     */
     @Override
     public Expression visitId(PropLogicParser.IdContext ctx) {
         return Variable.of(ctx.ID().getText());

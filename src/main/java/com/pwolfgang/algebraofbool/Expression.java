@@ -20,7 +20,9 @@ package com.pwolfgang.algebraofbool;
 import static com.pwolfgang.algebraofbool.Constant.ONE;
 
 /**
- * The interface to define an Expression.
+ * The interface to define an Expression. The Algebra of Bool operations
+ * (times, plus) are abstract. Default methods are provided for the 
+ * Boolean Algebra operations (and, or, not, impl, equiv).
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
 public interface Expression {
