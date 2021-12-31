@@ -127,5 +127,5 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
     public Expression visitId(PropLogicParser.IdContext ctx) {
         return Variable.of(ctx.ID().getText());
     }
-
+    
 }
