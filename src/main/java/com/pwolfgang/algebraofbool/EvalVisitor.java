@@ -58,9 +58,12 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
         System.out.print(ctx.getText());
         System.out.println(conc);
         var result = prem.impl(conc);
+        System.out.println("Premices imply Conclusion");
         System.out.println(result);
         if (result == ONE) {
             System.out.println("QED");
+        } else {
+            System.out.println("Not Proven");
         }
         return result;
         
@@ -95,12 +98,12 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
         var statements = ctx.stat();
         var itr = statements.iterator();
         var premice = visit(itr.next());
-        System.out.println(premice);
+            System.out.println(premice);
         while (itr.hasNext()) {
             var stmt = visit(itr.next());
-            System.out.println(stmt);
-            premice = premice.and(stmt);
-        }
+                System.out.println(stmt);
+                premice = premice.and(stmt);
+            }
         System.out.println(premice);
         return premice;
     }

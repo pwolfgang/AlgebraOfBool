@@ -1,9 +1,7 @@
-﻿I → P
-M → A
-Y → S
-A → ¬P
-¬M → ¬S
+/* No interesting poems are unpopular      */  ﻿I → P
+/* No modern poetry is free from affection */  M → A
+/* All your poems are on soap-bubbles.     */  Y → S
+/* No affected poetry is popular           */  A → ¬P
+/* No ancient poem is on soap-bubbles.     */ ¬M → ¬S
 __________
-Y → ¬I
-
-
+/* Your poems are not interesting          */  Y → ¬I

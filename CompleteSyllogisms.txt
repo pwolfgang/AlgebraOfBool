@@ -84,14 +84,14 @@ S o P	∴Some S are not P
 
 Felapton
 M e P	No M is P
-M		There is a M
+M	There is a M
 M a S	All M are S
 S o P	∴Some S are not P
 
 Darapti
 M a P	All M are P
 M a S	All M are S
-M		There is an M
+M	There is an M
 S i P	∴Some S are P
 
 Calemes
@@ -112,18 +112,18 @@ S o P	∴Some S are not P
 Calemos
 P a M	All P are M
 M e S	no M is S
-S		There is an S
+S	There is an S
 S o P	∴Some S are not P
 
 Fesapo
 P e M	No P is M
 M a S	All M are S
-M		There is an M
+M	There is an M
 S o P	∴Some S are not P
 
 Bamalip
 P a M	All P are M
-P		There is a P
+P	There is a P
 M a S	All M are S
 S i P	∴Some S are P
 

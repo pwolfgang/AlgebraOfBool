@@ -1,4 +1,0 @@
-﻿cat(x) ∧ ¬pet(x).
-cat(X) → mammal(X).
-__________
-mammal(x) ∧ ¬pet(x).

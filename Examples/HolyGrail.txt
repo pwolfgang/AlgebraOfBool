@@ -1,7 +1,22 @@
+/* This road leads to the grail. */ 
+/* If the stones take you there, */
+/* so does the marble road       */
 ﻿¬(G ∧ (S → M))
+
+/* Neither the gold or stone roads */
+/* lead to the grail.              */
 ¬(¬G ∧ ¬S)
+
+/* Follow the gold and you'll reach */
+/* the grail, follow the marble and */
+/* you'll be lost.                  */
 ¬(G ∧ ¬M)
 __________
+/* The grail is on the gold road. */
 G
+
+/* The grail is on the marble road. */
 M
+
+/* The grail is on the stone road. */
 S

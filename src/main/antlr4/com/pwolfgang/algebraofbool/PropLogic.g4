@@ -23,7 +23,9 @@ prem: stat+;
 
 conc: stat+;
 
-stat:   expr NL;
+stat: blank* expr NL;
+
+blank: NL;
 
 expr: op='\u00AC' expr        #notop
     | expr op='\u2227' expr   #andop

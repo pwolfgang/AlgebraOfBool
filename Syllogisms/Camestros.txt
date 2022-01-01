@@ -1,5 +1,0 @@
-﻿horse(X) → hooves(X).
-human(X) → ¬hooves(X).
-human(x).
-__________
-human(x) ∧ ¬horse(x).

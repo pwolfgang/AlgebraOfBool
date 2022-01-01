@@ -1,5 +1,0 @@
-﻿/* All men are mortal (M a P)  */		man(X) → mortal(X).
-/* All Greeks are men (S a M)  */		greek(X) → man(X).
-/* There is at least one Greek */		greek(x).
-__________
-/* ∴ Some Greeks are mortal (S i P)*/	greek(x) ∧ mortal(x).
