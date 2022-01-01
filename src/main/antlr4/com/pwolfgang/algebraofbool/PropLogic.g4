@@ -41,5 +41,5 @@ fragment DIGIT: [0-9];
 LINE: '_'+;
 ID: LETTER DIGIT*;
 NL: '\r\n';
-WS: [ \t\uFEFF]+ -> skip;
-COMMENT: '/*' .*? '*/' -> skip;
+WS: [ \t\uFEFF]+ -> channel(HIDDEN);
+COMMENT: '/*' .*? '*/' -> channel(HIDDEN);

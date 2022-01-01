@@ -19,8 +19,6 @@ package com.pwolfgang.algebraofbool;
 
 import static com.pwolfgang.algebraofbool.Constant.ONE;
 import static com.pwolfgang.algebraofbool.Constant.ZERO;
-import com.pwolfgang.algebraofbool.Expression;
-import com.pwolfgang.algebraofbool.Variable;
 
 /**
  * Visit the parse tree and convert it to an Expression.
@@ -104,6 +102,7 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
                 System.out.println(stmt);
                 premice = premice.and(stmt);
             }
+        System.out.println("Combined Premices");
         System.out.println(premice);
         return premice;
     }
@@ -116,7 +115,11 @@ public class EvalVisitor extends PropLogicBaseVisitor<Expression> {
      */
     @Override
     public Expression visitStat(PropLogicParser.StatContext ctx) {
-        System.out.print(ctx.getText());
+        ctx.children.forEach(child->{
+            if (child instanceof PropLogicParser.ExprContext) {
+                System.out.println(child.getText());
+            }
+        });
         return visit(ctx.expr());
         
     }
