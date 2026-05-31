@@ -48,8 +48,8 @@ All mathematical operations are over the field {0, 1}, essentially arithmetic mo
 
 0 + _x_ = _x_
 
-1 + x = 1 if _x_=0
- 0 if _x_ = 1
+1 + x = 1 if _x_ = 0  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;0 if _x_ = 1
 
 _x_ + _x_ = 0
 
@@ -66,8 +66,8 @@ _x_ × _x_ = _x_
 | Propositional Logic | Algebra of Bool |
 | --- | --- |
 | ¬_x_ | 1 + _x_ |
-| _x_∧_y_ | _x_ × _y_ |
-| _x_∨_y_ | _x_ + _y_ + _x_×_y_ |
+| _x_ ∧ _y_ | _x_ × _y_ |
+| _x_ ∨ _y_ | _x_ + _y_ + _x_×_y_ |
 | _x_ → _y_ | 1 + _x_ + _x_×_y_ |
 | _x_ ≡ _y_ | 1 + _x_ + _y_ |
 
