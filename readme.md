@@ -65,10 +65,10 @@ _x_ × _x_ = _x_
 
 | Propositional Logic | Algebra of Bool |
 | --- | --- |
-| ¬_x_ | 1 + _x_ |
+| ¬ _x_ | 1 + _x_ |
 | _x_ ∧ _y_ | _x_ × _y_ |
-| _x_ ∨ _y_ | _x_ + _y_ + _x_×_y_ |
-| _x_ → _y_ | 1 + _x_ + _x_×_y_ |
+| _x_ ∨ _y_ | _x_ + _y_ + _x_ × _y_ |
+| _x_ → _y_ | 1 + _x_ + _x_ × _y_ |
 | _x_ ≡ _y_ | 1 + _x_ + _y_ |
 
 ### Grammar
