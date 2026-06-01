@@ -23,7 +23,7 @@ import static com.pwolfgang.algebraofbool.Constant.ONE;
  * The interface to define an Expression.
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public interface Expression {
+public sealed interface Expression permits Constant, Variable, Primative, Factor, Term {
     /**
      * Multiply two Expressions.
      * @param e The other Expression.

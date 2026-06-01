@@ -20,6 +20,6 @@ package com.pwolfgang.algebraofbool;
  * A tagging interface.
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public interface Primative extends Expression {
+public sealed interface Primative extends Expression permits Constant, Variable {
     
 }

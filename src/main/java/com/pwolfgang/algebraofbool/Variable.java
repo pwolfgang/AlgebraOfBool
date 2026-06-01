@@ -26,7 +26,7 @@ import java.util.Map;
  * A variable is a String. Variables are unique objects. 
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public class Variable implements Primative {
+public final class Variable implements Primative, Expression {
     
     private final String id;
     private static final Map<String, Variable> POOL = new HashMap<>();

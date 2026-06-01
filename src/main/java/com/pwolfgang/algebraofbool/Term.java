@@ -31,7 +31,7 @@ import java.util.StringJoiner;
  *
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public class Term implements Expression {
+public final class Term implements Expression {
 
     Set<Expression> factors;
 
@@ -71,9 +71,7 @@ public class Term implements Expression {
             if (newFactors.isEmpty()) {
                 return ZERO;
             } else if (newFactors.size() == 1) {
-                var itr = newFactors.iterator();
-                var result = itr.next();
-                return result;
+                return newFactors.getFirst();
             } else {
                 Expression result = new Term(newFactors);
                 return result;
@@ -110,9 +108,7 @@ public class Term implements Expression {
         if (newFactors.isEmpty()) {
             return ZERO;
         } else if (newFactors.size() == 1) {
-            var itr = newFactors.iterator();
-            var result = itr.next();
-            return result;
+            return newFactors.getFirst();
         } else {
             return new Term(newFactors);
         }
@@ -126,44 +122,46 @@ public class Term implements Expression {
      * Factor in this Term.
      *
      * @param e The other Expression
-     * @return Ths product.
+     * @return The product.
      */
     @Override
     public Expression times(Expression e) {
-        if (e instanceof Constant) {
-            var result = e.times(this);
-            System.out.println(result);
-            return result;
-        }
-        if (e instanceof Variable || e instanceof Factor) {
-            List<Expression> newFactors = new ArrayList<>();
-            factors.forEach(f -> {
-                newFactors.add(e.times(f));
-            });
-            var result = createTermFromList(newFactors);
-            return result;
-        }
-        if (e instanceof Term) {
-            Term otherTerm = (Term) e;
-            Set<Expression> otherFactors = otherTerm.factors;
-            List<Expression> newFactors = new ArrayList<>();
-            factors.forEach(f -> {
-                otherFactors.forEach(of -> {
-                    newFactors.add(f.times(of));
+        switch (e) {
+            case Constant c -> {
+                return c.times(this);
+            }
+            case Variable v -> {
+                List<Expression> newFactors = new ArrayList<>();
+                factors.forEach(f -> {
+                    newFactors.add(v.times(f));
                 });
-            });
-            var result = createTermFromList(newFactors);
-            return result;
+                return createTermFromList(newFactors);
+            } 
+            case Factor v -> {
+                List<Expression> newFactors = new ArrayList<>();
+                factors.forEach(f -> {
+                    newFactors.add(v.times(f));
+                });
+                return createTermFromList(newFactors);
+            }
+            case Term t -> {
+                Set<Expression> otherFactors = t.factors;
+                List<Expression> newFactors = new ArrayList<>();
+                factors.forEach(f -> {
+                    otherFactors.forEach(of -> {
+                        newFactors.add(f.times(of));
+                    });
+                });
+                return createTermFromList(newFactors);
+            }
         }
-        throw new RuntimeException("Type of e not recognized " + e.getClass());
-    }
+   }
 
     private Expression createTermFromList(List<Expression> newFactors) {
         if (newFactors.isEmpty()) {
             return ZERO;
         } else if (newFactors.size() == 1) {
-            var itr = newFactors.iterator();
-            return itr.next();
+            return newFactors.getFirst();
         } else {
             var itr = newFactors.iterator();
             var e1 = itr.next();

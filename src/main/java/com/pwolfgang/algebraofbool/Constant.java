@@ -21,7 +21,7 @@ package com.pwolfgang.algebraofbool;
  * There are two constants ZERO and ONE.
  * @author Paul Wolfgang <paul@pwolfgang.com>
  */
-public enum Constant implements Primative  {
+public enum Constant implements Primative, Expression  {
     ONE, ZERO;
     /**
      * The multiply operator. ZERO times anything is ZERO and ONE times
@@ -31,14 +31,10 @@ public enum Constant implements Primative  {
      */
     @Override
     public Expression times(Expression e) {
-        switch (this) {
-            case ZERO:
-                return ZERO;
-            case ONE:
-                return e;
-            default:
-                throw new IllegalArgumentException(this + " is not a valid constant");
-        }
+        return switch (this) {
+            case ZERO -> ZERO;
+            case ONE -> e;
+        };
     }
 
     /**
@@ -51,25 +47,16 @@ public enum Constant implements Primative  {
      */
     @Override
     public Expression plus(Expression e) {
-        switch (this) {
-            case ZERO:
-                return e;
-            case ONE:
-                if (e == ZERO) {
-                    return this;
-                }
-                if (e == ONE) {
-                    return ZERO;
-                } else {
-                    if (e instanceof Term) {
-                        return e.plus(this);
-                    } else {
-                        return new Term(ONE, e);
-                    }
-                }
-            default:
-                throw new IllegalArgumentException(this + " is not a valid constant");
-        }
+        return switch (this) {
+            case ZERO -> e;
+            case ONE ->
+                switch (e) {
+                    case Constant c when c == ZERO -> this;
+                    case Constant c when c == ONE -> ZERO;
+                    case Term t -> t.plus(this);
+                    default -> new Term(ONE, e);
+                };
+        };
     }
     
     /**
@@ -78,13 +65,9 @@ public enum Constant implements Primative  {
      */
     @Override
     public String toString() {
-        switch (this) {
-            case ONE:
-                return "1";
-            case ZERO:
-                return "0";
-            default:
-                throw new IllegalArgumentException(this + " is not a valid constant");
-        }
+        return switch (this) {
+            case ONE -> "1";
+            case ZERO -> "0";
+        };
     }
 }

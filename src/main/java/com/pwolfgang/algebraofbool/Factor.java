@@ -26,7 +26,7 @@ import java.util.Set;
  * A factor represents the conjunction of one or more Expressions
  * @author Paul
  */
-public class Factor implements Expression {
+public final class Factor implements Expression {
 
     /**
      * The components of this Factor.
@@ -59,20 +59,13 @@ public class Factor implements Expression {
      */
     @Override
     public Expression plus(Expression e) {
-        if (e instanceof Constant) {
-            return e.plus(this);
-        }
-        if (e instanceof Variable) {
-            return new Term(this, e);
-        }
-        if (e instanceof Factor) {
-            if (this.equals(e)) {
-                return ZERO;
-            } else {
-                return new Term(this, e);
-            }
-        }
-        return e.plus(this);
+        return switch (e) {
+            case Constant c -> c.plus(this);
+            case Variable v -> new Term(this,v);
+            case Factor f when this.equals(f) -> ZERO;
+            case Factor f -> new Term(this,f);
+            default -> e.plus(this);
+        };
     }
 
     /**
@@ -83,31 +76,13 @@ public class Factor implements Expression {
      */
     @Override
     public Expression times(Expression e) {
-        var newPrimatives = new LinkedHashSet<Expression>(primatives);
-        if (e instanceof Constant) {
-            var result = e.times(this);
-            return result;
-        }
-        if (e instanceof Variable) {
-            if (primatives.contains(e)) {
-                return this;
-            } else {
-                newPrimatives.add(e);
-                Expression result = new Factor(newPrimatives);
-                return result;
-            }
-        }
-        if (e instanceof Factor) {
-            Factor f = (Factor)e;
-            for (Expression p : f.primatives) {
-                if (!newPrimatives.contains(p)) {
-                    newPrimatives.add(p);
-                }
-            }
-            Expression result = new Factor(newPrimatives);
-            return result;
-        }
-        return e.times(this);
+        return switch (e) {
+            case Constant c -> c.times(this);
+            case Variable v when primatives.contains(v) -> this;
+            case Variable v -> insert(v);
+            case Factor f -> insert(f);
+            default -> e.times(this);
+        };
     }
 
     /**
@@ -139,5 +114,17 @@ public class Factor implements Expression {
         StringBuilder stb = new StringBuilder();
         primatives.forEach(p -> stb.append(p));
         return stb.toString();
+    }
+    
+    private Factor insert(Variable v) {
+        Set<Expression> newPrimatives = new LinkedHashSet<>(primatives);
+        newPrimatives.add(v);
+        return new Factor(newPrimatives);   
+    }
+    
+    private Factor insert(Factor f) {
+        Set<Expression> newPrimatives = new LinkedHashSet<>(primatives);
+        newPrimatives.addAll(f.primatives);
+        return new Factor(newPrimatives);
     }
 }
